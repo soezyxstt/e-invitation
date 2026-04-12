@@ -1,0 +1,145 @@
+// Sentuh Undang — fondasi Tier 1 (Simpel), siap diperluas untuk Tier 2–4.
+// Upload file hanya lewat Uploadthing di klien; DB menyimpan URL, bukan blob.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// --- Enums ---
+
+enum InvitationStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+/// Jenis aset dari Uploadthing (galeri/musik/video untuk tier atas).
+enum InvitationAssetKind {
+  HERO_IMAGE
+  GALLERY_IMAGE
+  BACKGROUND_MUSIC
+  VIDEO_BACKGROUND
+}
+
+enum RsvpAttendance {
+  PENDING
+  ATTENDING
+  DECLINED
+  MAYBE
+}
+
+// --- Admin (pemilik undangan; NextAuth Credentials mengikat ke User) ---
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String
+  displayName  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  invitations Invitation[]
+
+  @@map("users")
+}
+
+/// Baris referensi: Simpel, Geulis, Kasep, Sultan — di-seed dengan id tetap 1..4.
+model Tier {
+  id        Int    @id @default(autoincrement())
+  code      String @unique // "simpel" | "geulis" | "kasep" | "sultan"
+  name      String
+  sortOrder Int    @default(0)
+
+  invitations Invitation[]
+
+  @@map("tiers")
+}
+
+/// Satu undangan publik per `slug` (/[slug]).
+model Invitation {
+  id     String @id @default(cuid())
+  /// Judul tampilan undangan (misal: "Pernikahan Andi & Siti").
+  title  String
+  slug   String @unique
+  tierId Int
+  tier   Tier   @relation(fields: [tierId], references: [id])
+
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  status InvitationStatus @default(DRAFT)
+
+  // --- Inti acara (Tier 1) ---
+  groomName  String
+  brideName  String
+  eventDate  DateTime
+  venueName  String
+  venueAddress String?
+  /// Link Google Maps untuk lokasi acara.
+  mapUrl String?
+
+  /// Baris perkenalan orang tua / gelar (hierarki keluarga).
+  groomParentsLine String?
+  brideParentsLine String?
+
+  /// Urutan kelahiran mempelai pria (misal: "putra pertama").
+  groomChildOrder String?
+  /// Urutan kelahiran mempelai wanita (misal: "putri kedua").
+  brideChildOrder String?
+
+  /// Ayat/doa pembuka — teks (Arab Latin) atau referensi template.
+  openingReligiousText String?
+
+  /// Kunci atau cuplikan template Basa Sunda lemes (UI memetakan ke template).
+  basaSundaLemesKey String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  assets InvitationAsset[]
+  rsvps  Rsvp[]
+
+  @@index([ownerId])
+  @@index([tierId])
+  @@map("invitations")
+}
+
+/// URL dari Uploadthing — tidak memproses unggah di Route Handler panjang.
+model InvitationAsset {
+  id            String @id @default(cuid())
+  invitationId  String
+  invitation    Invitation @relation(fields: [invitationId], references: [id], onDelete: Cascade)
+
+  kind      InvitationAssetKind
+  url       String
+  altText   String?
+  sortOrder Int                 @default(0)
+
+  @@index([invitationId, sortOrder])
+  @@map("invitation_assets")
+}
+
+/// RSVP: nomor telepon sensitif — jangan expose di API publik.
+model Rsvp {
+  id           String @id @default(cuid())
+  invitationId String
+  invitation   Invitation @relation(fields: [invitationId], references: [id], onDelete: Cascade)
+
+  guestName  String
+  attendance RsvpAttendance @default(PENDING)
+  message    String?
+  /// Hanya untuk admin/dashboard; filter di layer API publik.
+  phone      String?
+  partySize  Int            @default(1)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([invitationId, createdAt])
+  @@map("rsvps")
+}
