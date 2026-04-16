@@ -32,10 +32,12 @@
   --color-sage-green:    var(--color-royal-emerald);
   --color-wood-brown:    var(--color-hunter-green);
 
-  /* Semantic extensions — diselaraskan dengan tema hijau */
-  --color-surface-night: oklch(11% 0.045 162);
+  /* Semantic extensions */
+  /* surface-night: dark warm umber — frame desktop yang hangat, tanpa tint hijau */
+  --color-surface-night: oklch(22% 0.010 55);
   --color-whatsapp:      oklch(62% 0.19 155);
-  --color-accent-ember:  oklch(52% 0.17 45);
+  /* accent-ember: champagne gold — kontras mewah di atas latar gelap, serasi dengan emerald */
+  --color-accent-ember:  oklch(78% 0.13 84);
   --color-gold-shine:    oklch(87% 0.12 90);
 
   --font-sans: var(--font-geist-sans);
@@ -107,6 +109,35 @@ body {
 }
 .animate-marquee {
   animation: marquee 28s linear infinite;
+}
+
+/* Ornament: floating petal / leaf */
+@keyframes petal-drift {
+  0%   { transform: translateY(0)    rotate(0deg)  scale(1);    opacity: 0; }
+  12%  { opacity: 0.72; }
+  88%  { opacity: 0.38; }
+  100% { transform: translateY(-170px) rotate(32deg) scale(0.72); opacity: 0; }
+}
+.animate-petal-drift {
+  animation: petal-drift 8.5s ease-in-out infinite;
+}
+
+/* Ornament: cloud slow sway */
+@keyframes cloud-sway {
+  0%, 100% { transform: translateX(0px); opacity: 0.08; }
+  50%       { transform: translateX(10px); opacity: 0.13; }
+}
+.animate-cloud-sway {
+  animation: cloud-sway 9s ease-in-out infinite;
+}
+
+/* Ornament: gentle pulse ring */
+@keyframes gentle-pulse {
+  0%, 100% { transform: scale(1);    opacity: 0.35; }
+  50%       { transform: scale(1.06); opacity: 0.55; }
+}
+.animate-gentle-pulse {
+  animation: gentle-pulse 4s ease-in-out infinite;
 }
 
 /* ── Invitation / admin: gradients & shadows (theme tokens only in TSX) ── */

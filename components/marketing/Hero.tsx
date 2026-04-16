@@ -80,10 +80,10 @@ export function Hero() {
               className="font-serif text-5xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-primary-cream"
               style={{ fontFamily: "var(--font-serif)" }}
             >
-              <span className="block">Someah</span>
-              <span className="block text-muted-gold italic">nu Tulus</span>
+              <span className="block">Setiap Kata</span>
+              <span className="block text-muted-gold italic">Membawa Rasa</span>
               <span className="block text-primary-cream/70 text-4xl sm:text-5xl lg:text-6xl mt-1">
-                dina Unggal Undangan
+                Undangan Berkesan Selamanya
               </span>
             </h1>
           </motion.div>
@@ -97,8 +97,8 @@ export function Hero() {
             style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
           >
             Undangan digital pernikahan dengan sentuhan{" "}
-            <em className="text-muted-gold not-italic">Batik Garutan</em> dan{" "}
-            <em className="text-muted-gold not-italic">Basa Sunda Lemes</em> — tampil
+            <em className="text-muted-gold not-italic">Budaya Lokal</em> dan{" "}
+            <em className="text-muted-gold not-italic">Campuran Modern</em> — tampil
             elegan, tersampaikan instan, dikenang selamanya.
           </motion.p>
 

@@ -10,8 +10,8 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   const tiers = [
     { id: 1, code: "simpel", name: "Simpel", sortOrder: 1 },
-    { id: 2, code: "geulis", name: "Geulis", sortOrder: 2 },
-    { id: 3, code: "kasep", name: "Kasep", sortOrder: 3 },
+    { id: 2, code: "elegan", name: "Elegan", sortOrder: 2 },
+    { id: 3, code: "istimewa", name: "Istimewa", sortOrder: 3 },
     { id: 4, code: "sultan", name: "Sultan", sortOrder: 4 },
   ];
 

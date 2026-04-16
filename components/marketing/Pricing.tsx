@@ -12,59 +12,62 @@ const tiers = [
     name: "Simpel",
     subtitle: "Bersih & Cepat",
     price: "149.000",
+    originalPrice: "299.000",
     icon: Zap,
     accentClass: "text-wood-brown/80",
     description:
-      "Minimalis dan ultra-cepat. Cocok untuk yang ingin langsung sebar undangan tanpa ribet.",
+      "Cocok untuk yang ingin undangan digital rapi, langsung disebar tanpa repot.",
     features: [
       "Informasi pernikahan lengkap",
       "Link undangan personal",
       "Konfirmasi kehadiran (RSVP)",
-      "Template Basa Sunda Lemes",
-      "Gelar keluarga (Gelar Keturunan)",
-      "Berbagi via WhatsApp & media sosial",
+      "Pilihan teks Basa Sunda",
+      "Nama & gelar keluarga",
+      "Bagikan via WhatsApp & media sosial",
     ],
     cta: "Pilih Simpel",
     highlighted: false,
   },
   {
     id: 2,
-    name: "Geulis",
+    name: "Elegan",
     subtitle: "Cantik & Berkesan",
     price: "199.000",
+    originalPrice: "399.000",
     icon: Star,
     accentClass: "text-muted-gold",
     description:
-      "Sentuhan Batik Garutan hadir memperindah undangan Anda dengan galeri foto dan musik latar.",
+      "Undangan dengan sentuhan Batik Garutan, galeri foto kenangan, dan musik latar romantis.",
     features: [
       "Semua fitur Simpel",
       "Ornamen Batik Garutan",
-      "Galeri foto (maks. 10 foto)",
-      "Musik latar pilihan",
+      "Galeri foto kenangan (maks. 10)",
+      "Musik latar (Akad, Beautiful in White, dll.)",
       "Nama tamu personal di undangan",
-      "Pilihan 5 template estetik",
+      "5 pilihan tampilan estetik",
     ],
-    cta: "Pilih Geulis",
+    cta: "Pilih Elegan",
     highlighted: false,
   },
   {
     id: 3,
-    name: "Kasep",
+    name: "Istimewa",
     subtitle: "Lengkap & Elegan",
     price: "275.000",
+    originalPrice: "549.000",
     icon: Sparkles,
     accentClass: "text-sage-green",
     description:
-      "Pengalaman undangan yang utuh: cerita cinta, buku tamu digital, dan dashboard MC eksklusif.",
+      "Pengalaman undangan yang utuh: kisah perjalanan cinta, buku tamu digital, dan akses khusus untuk MC.",
     features: [
-      "Semua fitur Geulis",
-      "Timeline Perjalanan Cinta",
+      "Semua fitur Elegan",
+      "Kisah Perjalanan Cinta",
       "Buku Tamu Digital interaktif",
-      "Dashboard MC khusus (/mc)",
-      "Lite Mode untuk jaringan lambat",
-      "Priority support via WhatsApp",
+      "Halaman khusus untuk MC",
+      "Mode ringan untuk jaringan lambat",
+      "Dukungan prioritas via WhatsApp",
     ],
-    cta: "Pilih Kasep",
+    cta: "Pilih Istimewa",
     highlighted: true,
   },
   {
@@ -72,17 +75,18 @@ const tiers = [
     name: "Sultan",
     subtitle: "Premium & Eksklusif",
     price: "325.000",
+    originalPrice: "649.000",
     icon: Crown,
     accentClass: "text-wood-brown",
     description:
-      "Puncak kemewahan: live streaming ucapan, QR check-in tamu, video background, dan domain khusus.",
+      "Undangan terlengkap: ucapan langsung dari tamu secara real-time, check-in via QR, video sinematik, dan domain khusus.",
     features: [
-      "Semua fitur Kasep",
-      "Live Greeting Wall real-time",
-      "QR Code Check-in sistem",
-      "Video background sinematik",
-      "Custom Domain support",
-      "Laporan analytics tamu",
+      "Semua fitur Istimewa",
+      "Dinding ucapan langsung (Live Wall)",
+      "Check-in tamu via QR Code",
+      "Latar video sinematik",
+      "Dukungan domain khusus",
+      "Laporan kunjungan tamu",
     ],
     cta: "Pilih Sultan",
     highlighted: false,
@@ -139,6 +143,12 @@ export function Pricing({ whatsappNumber }: PricingProps) {
             Dari yang sederhana hingga serba eksklusif — setiap paket dirancang
             untuk menghadirkan pengalaman undangan digital terbaik.
           </p>
+
+          {/* Promo banner */}
+          <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-muted-gold/10 border border-muted-gold/30 px-5 py-2">
+            <span className="text-muted-gold text-xs font-semibold tracking-wide uppercase">🎉 Promo Peluncuran</span>
+            <span className="text-wood-brown/70 text-xs" style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}>Hemat 50% untuk semua paket — terbatas!</span>
+          </div>
         </FadeInSection>
 
         {/* Tier cards grid */}
@@ -205,14 +215,26 @@ export function Pricing({ whatsappNumber }: PricingProps) {
                         {tier.subtitle}
                       </p>
                     </div>
-                    <span
-                      className={`text-2xl font-semibold tabular-nums ${
-                        isHighlighted ? "text-muted-gold" : "text-wood-brown"
-                      }`}
-                    >
-                      <span className="text-sm font-normal">Rp</span>
-                      {tier.price}
-                    </span>
+
+                    {/* Price with strikethrough */}
+                    <div className="text-right">
+                      <p
+                        className={`text-xs line-through tabular-nums ${
+                          isHighlighted ? "text-primary-cream/35" : "text-wood-brown/35"
+                        }`}
+                        style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
+                      >
+                        Rp{tier.originalPrice}
+                      </p>
+                      <span
+                        className={`text-2xl font-semibold tabular-nums leading-none ${
+                          isHighlighted ? "text-muted-gold" : "text-wood-brown"
+                        }`}
+                      >
+                        <span className="text-sm font-normal">Rp</span>
+                        {tier.price}
+                      </span>
+                    </div>
                   </div>
 
                   {/* Divider */}

@@ -1,16 +1,17 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const footerLinks = {
   Paket: [
     { label: "Simpel", href: "#paket" },
-    { label: "Geulis", href: "#paket" },
-    { label: "Kasep", href: "#paket" },
+    { label: "Elegan", href: "#paket" },
+    { label: "Istimewa", href: "#paket" },
     { label: "Sultan", href: "#paket" },
   ],
   Platform: [
     { label: "Tentang Kami", href: "#" },
-    { label: "Portofolio", href: "#portofolio" },
-    { label: "FAQ", href: "#" },
+    { label: "Preview Desain", href: "#preview" },
+    { label: "FAQ", href: "#faq" },
     { label: "Kontak", href: "#" },
   ],
   Legal: [
@@ -29,16 +30,14 @@ export function Footer() {
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-16">
           {/* Brand column */}
           <div className="col-span-2">
-            <Link href="/" className="inline-flex items-center gap-2 mb-5 group">
-              <span className="w-7 h-7 rounded-full border border-muted-gold flex items-center justify-center">
-                <span className="w-2 h-2 rounded-full bg-muted-gold" />
-              </span>
-              <span
-                className="font-serif text-xl text-primary-cream"
-                style={{ fontFamily: "var(--font-serif)" }}
-              >
-                Sentuh<span className="text-muted-gold">Undang</span>
-              </span>
+            <Link href="/" className="inline-flex items-center mb-5">
+              <Image
+                src="/logo.png"
+                alt="SentuhUndang"
+                width={130}
+                height={36}
+                className="h-8 w-auto object-contain brightness-0 invert opacity-80"
+              />
             </Link>
             <p
               className="text-sm leading-relaxed text-primary-cream/45 max-w-xs"

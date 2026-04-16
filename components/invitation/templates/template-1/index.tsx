@@ -8,7 +8,24 @@ import { GuestBook } from "@/components/invitation/guest-book";
 import { QrisSection } from "@/components/invitation/qris-section";
 import { VideoHero } from "@/components/invitation/video-hero";
 import { MapsEmbed } from "@/components/invitation/maps-embed";
+import {
+  BatikBorder,
+  BatikCornerGroup,
+  FloatingPetals,
+  CloudLayer,
+  WavyBatikEdge,
+  LotusRing,
+  FloralSeparator,
+} from "@/components/invitation/ornament";
+import {
+  KawungBg,
+  ParangDarkBg,
+  SemenBg,
+  LerengBg,
+} from "@/components/invitation/pattern-bg";
 import { CarouselGallery } from "./carousel-gallery";
+import { getFirstName } from "@/lib/name-utils";
+import { groomFallback, brideFallback } from "@/lib/portrait-fallback";
 import type { InvitationTemplateProps } from "../types";
 
 /**
@@ -61,27 +78,21 @@ function SectionHead({
 function CirclePortrait({
   src,
   alt,
-  initial,
+  fallbackUrl,
 }: {
   src: string | null;
   alt: string;
-  initial: string;
+  fallbackUrl: string;
 }) {
   return (
     <div className="avatar-ring-editorial mx-auto h-32 w-32 overflow-hidden rounded-full border-2 border-muted-gold/60">
-      {src ? (
-        <Image
-          src={src}
-          alt={alt}
-          width={128}
-          height={128}
-          className="h-full w-full object-cover"
-        />
-      ) : (
-        <div className="flex h-full w-full items-center justify-center bg-muted-gold/15">
-          <span className="font-serif text-4xl text-wood-brown">{initial}</span>
-        </div>
-      )}
+      <Image
+        src={src ?? fallbackUrl}
+        alt={alt}
+        width={128}
+        height={128}
+        className="h-full w-full object-cover"
+      />
     </div>
   );
 }
@@ -107,8 +118,8 @@ export default function Template1({
   eventDateLabel,
   eventTimeLabel,
 }: InvitationTemplateProps) {
-  const shortGroom = inv.groomName.split(" ")[0];
-  const shortBride = inv.brideName.split(" ")[0];
+  const shortGroom = getFirstName(inv.groomName);
+  const shortBride = getFirstName(inv.brideName);
 
   return (
     <div className="bg-primary-cream font-sans">
@@ -164,10 +175,16 @@ export default function Template1({
         </section>
       )}
 
+      {/* ── ORNAMENT DIVIDER ──────────────────────────────────────────────── */}
+      <WavyBatikEdge className="mx-0" />
+
       {/* ── OPENING TEXT ──────────────────────────────────────────────────── */}
       {inv.openingReligiousText && (
-        <section className="bg-primary-cream px-8 py-16">
-          <FadeIn className="mx-auto max-w-sm text-center">
+        <section className="relative overflow-hidden bg-primary-cream px-8 py-16">
+          <KawungBg opacity={0.04} />
+          <BatikCornerGroup />
+          <FloatingPetals count={4} />
+          <FadeIn className="relative z-10 mx-auto max-w-sm text-center">
             <EditorialRule />
             <p className="mt-8 font-serif text-base italic leading-loose text-wood-brown">
               &ldquo;{inv.openingReligiousText}&rdquo;
@@ -184,19 +201,20 @@ export default function Template1({
       )}
 
       {/* ── COUPLE: Circle portraits, text below ─────────────────────────── */}
-      <section className="bg-primary-cream px-8 py-16">
-        <FadeIn>
+      <section className="relative overflow-hidden bg-primary-cream px-8 py-16">
+        <SemenBg opacity={0.038} />
+        <FadeIn className="relative z-10">
           <SectionHead eyebrow="Mempelai" title="The Couple" />
         </FadeIn>
 
-        <div className="mx-auto max-w-sm space-y-12">
+        <div className="relative z-10 mx-auto max-w-sm space-y-12">
           {/* Mempelai Pria */}
           <FadeIn direction="left">
             <div className="text-center">
               <CirclePortrait
                 src={groomPortraitUrl}
                 alt={inv.groomName}
-                initial={inv.groomName[0]}
+                fallbackUrl={groomFallback(inv.groomName)}
               />
               <p className="mt-5 font-sans text-[9px] uppercase tracking-[0.38em] text-wood-brown/80">
                 Mempelai Pria
@@ -217,8 +235,12 @@ export default function Template1({
             </div>
           </FadeIn>
 
-          {/* Divider */}
-          <EditorialRule />
+          {/* Divider with lotus ornament */}
+          <div className="flex flex-col items-center gap-3">
+            <EditorialRule />
+            <LotusRing />
+            <EditorialRule />
+          </div>
 
           {/* Mempelai Wanita */}
           <FadeIn direction="right">
@@ -226,7 +248,7 @@ export default function Template1({
               <CirclePortrait
                 src={bridePortraitUrl}
                 alt={inv.brideName}
-                initial={inv.brideName[0]}
+                fallbackUrl={brideFallback(inv.brideName)}
               />
               <p className="mt-5 font-sans text-[9px] uppercase tracking-[0.38em] text-wood-brown/80">
                 Mempelai Wanita
@@ -249,9 +271,15 @@ export default function Template1({
         </div>
       </section>
 
+      {/* ── BATIK DIVIDER ─────────────────────────────────────────────────── */}
+      <BatikBorder />
+
       {/* ── SAVE THE DATE / COUNTDOWN ─────────────────────────────────────── */}
-      <section className="bg-surface-night px-8 py-16 text-center">
-        <FadeIn>
+      <section className="relative overflow-hidden bg-surface-night px-8 py-16 text-center">
+        <ParangDarkBg opacity={0.1} />
+        <CloudLayer position="top" opacity={0.07} />
+        <FloatingPetals count={5} dark />
+        <FadeIn className="relative z-10">
           <p className="font-sans text-[9px] uppercase tracking-[0.5em] text-muted-gold/55">
             Save The Date
           </p>
@@ -261,14 +289,19 @@ export default function Template1({
           <EditorialRule className="mx-auto mt-5 mb-8 max-w-[180px] opacity-20" />
           <CountdownTimer eventDate={inv.eventDate} />
         </FadeIn>
+        <CloudLayer position="bottom" opacity={0.06} />
       </section>
 
+      {/* ── BATIK DIVIDER ─────────────────────────────────────────────────── */}
+      <BatikBorder />
+
       {/* ── EVENT DETAILS ─────────────────────────────────────────────────── */}
-      <section className="bg-primary-cream px-8 py-16">
-        <FadeIn>
+      <section className="relative overflow-hidden bg-primary-cream px-8 py-16">
+        <LerengBg opacity={0.04} />
+        <FadeIn className="relative z-10">
           <SectionHead eyebrow="Informasi Acara" title="Wedding Event" />
         </FadeIn>
-        <FadeIn className="mx-auto max-w-sm space-y-3">
+        <FadeIn className="relative z-10 mx-auto max-w-sm space-y-3">
           <div className="overflow-hidden rounded-xl border border-muted-gold/60 bg-white shadow-sm">
             <div className="flex items-center gap-4 border-b border-muted-gold/25 px-5 py-4">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface-night">
@@ -319,27 +352,33 @@ export default function Template1({
 
       {/* ── TIMELINE (Tier 3+) ────────────────────────────────────────────── */}
       {isTier3Plus && timelineEvents.length > 0 && (
-        <section className="bg-primary-cream px-8 py-16">
-          <FadeIn>
+        <section className="relative overflow-hidden bg-primary-cream px-8 py-16">
+          <KawungBg opacity={0.035} />
+          <FadeIn className="relative z-10">
             <SectionHead eyebrow="Perjalanan Cinta" title="Our Story" />
           </FadeIn>
-          <div className="mx-auto max-w-sm">
+          <div className="relative z-10 mx-auto max-w-sm">
             <Timeline events={timelineEvents} />
           </div>
         </section>
       )}
 
+      {/* ── BATIK DIVIDER ─────────────────────────────────────────────────── */}
+      <BatikBorder />
+
       {/* ── RSVP ─────────────────────────────────────────────────────────── */}
       {inv.status === "PUBLISHED" && (
-        <section className="bg-primary-cream px-8 py-16">
-          <FadeIn>
+        <section className="relative overflow-hidden bg-primary-cream px-8 py-16">
+          <SemenBg opacity={0.038} />
+          <BatikCornerGroup />
+          <FadeIn className="relative z-10">
             <SectionHead eyebrow="Konfirmasi" title="RSVP" />
             <p className="mx-auto -mt-6 mb-10 max-w-xs text-center font-sans text-sm leading-relaxed text-wood-brown/85">
               Mohon konfirmasi kehadiran Anda sebelum hari-H agar kami dapat
               mempersiapkan segalanya dengan baik.
             </p>
           </FadeIn>
-          <FadeIn className="mx-auto max-w-sm">
+          <FadeIn className="relative z-10 mx-auto max-w-sm">
             <RsvpForm
               invitationId={inv.id}
               defaultName={guestName ?? undefined}
@@ -351,16 +390,20 @@ export default function Template1({
 
       {/* ── BUKU TAMU (Tier 3+) ──────────────────────────────────────────── */}
       {isTier3Plus && (
-        <section className="bg-primary-cream px-8 py-16">
-          <FadeIn>
+        <section className="relative overflow-hidden bg-primary-cream px-8 py-16">
+          <LerengBg opacity={0.038} />
+          <FadeIn className="relative z-10">
             <SectionHead eyebrow="Ucapan Tamu" title="Buku Tamu" />
           </FadeIn>
           <GuestBook entries={guestBookEntries} invitationId={inv.id} />
         </section>
       )}
 
-      {/* ── QRIS (Tier 4) ───────────────────────────────────────────────── */}
-      {isTier4 && qrisData && (
+      {/* ── BATIK DIVIDER ─────────────────────────────────────────────────── */}
+      <BatikBorder />
+
+      {/* ── AMPLOP DIGITAL / QRIS ─────────────────────────────────────────── */}
+      {qrisData && (
         <FadeIn>
           <QrisSection
             qrisUrl={qrisData.qrisUrl}
@@ -390,9 +433,12 @@ export default function Template1({
       )}
 
       {/* ── FOOTER ───────────────────────────────────────────────────────── */}
-      <footer className="bg-surface-night px-8 py-16 text-center">
-        <FadeIn>
-          <p className="font-sans text-[8px] uppercase tracking-[0.55em] text-muted-gold/35">
+      <footer className="relative overflow-hidden bg-surface-night px-8 py-16 text-center">
+        <ParangDarkBg opacity={0.1} />
+        <FloatingPetals count={4} dark />
+        <FadeIn className="relative z-10">
+          <FloralSeparator className="opacity-30" />
+          <p className="mt-6 font-sans text-[8px] uppercase tracking-[0.55em] text-muted-gold/35">
             With Love
           </p>
           <p className="mt-5 font-serif text-2xl font-light text-primary-cream">

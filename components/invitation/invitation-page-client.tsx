@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { CoverOverlay } from "./cover-overlay";
 import { MusicPlayer } from "./music-player";
 import { LiteModeToggle } from "./lite-mode-toggle";
+import { SharingQR } from "./sharing-qr";
 import { LiteModeProvider } from "@/lib/lite-mode-context";
 
 interface InvitationPageClientProps {
@@ -52,6 +53,7 @@ function InvitationPageInner({
       {/* Floating controls — visible after cover exits */}
       {musicUrl && <MusicPlayer src={musicUrl} autoPlay={opened} />}
       <LiteModeToggle />
+      <SharingQR />
     </>
   );
 }

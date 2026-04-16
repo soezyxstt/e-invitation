@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { getFirstName } from "@/lib/name-utils";
+import { groomFallback, brideFallback } from "@/lib/portrait-fallback";
 
 interface FloatingCoupleProps {
   groomName: string;
@@ -24,8 +26,8 @@ export function FloatingCouple({
   groomParentsLine,
   brideParentsLine,
 }: FloatingCoupleProps) {
-  const shortGroom = groomName.split(" ")[0];
-  const shortBride = brideName.split(" ")[0];
+  const shortGroom = getFirstName(groomName);
+  const shortBride = getFirstName(brideName);
 
   return (
     <div className="relative">
@@ -42,21 +44,13 @@ export function FloatingCouple({
           style={{ rotate: -3 }}
         >
             <div className="relative aspect-3/4 w-full bg-surface-night">
-            {groomPortraitUrl ? (
-              <Image
-                src={groomPortraitUrl}
+            <Image
+                src={groomPortraitUrl ?? groomFallback(groomName)}
                 alt={groomName}
                 fill
                 sizes="(max-width: 480px) 55vw, 228px"
                 className="object-cover"
               />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center">
-                <span className="font-serif text-6xl font-light text-accent-ember/30">
-                  {groomName[0]}
-                </span>
-              </div>
-            )}
             {/* Name overlay at card bottom */}
             <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-surface-night via-surface-night/70 to-transparent px-4 pb-4 pt-14">
               <p className="font-mono text-[7px] uppercase tracking-[0.45em] text-accent-ember">
@@ -79,21 +73,13 @@ export function FloatingCouple({
           style={{ rotate: 2.5 }}
         >
             <div className="relative aspect-3/4 w-full bg-surface-night">
-            {bridePortraitUrl ? (
-              <Image
-                src={bridePortraitUrl}
+            <Image
+                src={bridePortraitUrl ?? brideFallback(brideName)}
                 alt={brideName}
                 fill
                 sizes="(max-width: 480px) 55vw, 228px"
                 className="object-cover"
               />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center">
-                <span className="font-serif text-6xl font-light text-accent-ember/30">
-                  {brideName[0]}
-                </span>
-              </div>
-            )}
             <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-surface-night via-surface-night/70 to-transparent px-4 pb-4 pt-14">
               <p className="font-mono text-[7px] uppercase tracking-[0.45em] text-accent-ember">
                 Mempelai Wanita

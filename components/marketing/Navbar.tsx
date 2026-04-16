@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
@@ -8,7 +9,8 @@ import { Menu, X } from "lucide-react";
 const navLinks = [
   { href: "#paket", label: "Paket" },
   { href: "#keunggulan", label: "Keunggulan" },
-  { href: "#portofolio", label: "Portofolio" },
+  { href: "#preview", label: "Preview" },
+  { href: "#faq", label: "FAQ" },
 ];
 
 export function Navbar() {
@@ -31,16 +33,15 @@ export function Navbar() {
 
       <nav className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <span className="w-7 h-7 rounded-full border border-muted-gold flex items-center justify-center">
-            <span className="w-2 h-2 rounded-full bg-muted-gold group-hover:scale-125 transition-transform duration-300" />
-          </span>
-          <span
-            className="font-serif text-lg tracking-wide text-primary-cream"
-            style={{ fontFamily: "var(--font-serif)" }}
-          >
-            Sentuh<span className="text-muted-gold">Undang</span>
-          </span>
+        <Link href="/" className="flex items-center group">
+          <Image
+            src="/logo.png"
+            alt="SentuhUndang"
+            width={140}
+            height={40}
+            className="h-9 w-auto object-contain"
+            priority
+          />
         </Link>
 
         {/* Desktop nav */}
@@ -58,17 +59,11 @@ export function Navbar() {
           ))}
         </ul>
 
-        {/* CTAs */}
+        {/* CTA */}
         <div className="hidden md:flex items-center gap-3">
           <Link
-            href="/login"
-            className="text-sm text-primary-cream/70 hover:text-primary-cream transition-colors px-4 py-2"
-          >
-            Masuk
-          </Link>
-          <Link
             href="#paket"
-            className="rounded-full bg-deep-charcoal px-5 py-2 text-sm font-medium tracking-wide text-primary-cream transition-colors hover:bg-deep-charcoal/90"
+            className="rounded-full bg-deep-charcoal px-5 py-2 text-sm font-medium tracking-wide text-primary-cream transition-colors hover:bg-deep-charcoal/90 border border-muted-gold/20 hover:border-muted-gold/50"
           >
             Mulai Sekarang
           </Link>
@@ -104,16 +99,9 @@ export function Navbar() {
           ))}
           <div className="flex flex-col gap-3 pt-4">
             <Link
-              href="/login"
-              onClick={() => setOpen(false)}
-              className="text-center py-2.5 rounded-full border border-primary-cream/20 text-primary-cream/70 text-sm"
-            >
-              Masuk
-            </Link>
-            <Link
               href="#paket"
               onClick={() => setOpen(false)}
-              className="rounded-full bg-deep-charcoal py-2.5 text-center text-sm font-medium text-primary-cream"
+              className="rounded-full bg-deep-charcoal py-2.5 text-center text-sm font-medium text-primary-cream border border-muted-gold/20"
             >
               Mulai Sekarang
             </Link>

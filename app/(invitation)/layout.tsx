@@ -20,14 +20,14 @@ export default function InvitationLayout({
      * invitation never looks like a stretched mobile page on wide screens.
      */
     <div className="inv-layout flex min-h-screen bg-surface-night lg:justify-center">
-      {/* Decorative side backgrounds on desktop */}
+      {/* Decorative side backgrounds on desktop — subtle warm vignette only */}
       <div
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 hidden lg:block"
         style={{
           background: `
-            radial-gradient(ellipse 80% 60% at 15% 50%, color-mix(in oklch, var(--color-wood-brown) 45%, transparent) 0%, transparent 70%),
-            radial-gradient(ellipse 80% 60% at 85% 50%, color-mix(in oklch, var(--color-wood-brown) 45%, transparent) 0%, transparent 70%)
+            radial-gradient(ellipse 60% 40% at 10% 50%, oklch(30% 0.012 55 / 0.35) 0%, transparent 70%),
+            radial-gradient(ellipse 60% 40% at 90% 50%, oklch(30% 0.012 55 / 0.35) 0%, transparent 70%)
           `,
         }}
       />

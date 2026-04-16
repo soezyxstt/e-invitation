@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { FadeIn } from "./fade-in";
+import { getFirstName } from "@/lib/name-utils";
 
 interface HeroSectionProps {
   groomName: string;
@@ -31,8 +32,8 @@ export function HeroSection({
   const yParallax = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
   const overlayOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
-  const shortGroom = groomName.split(" ")[0];
-  const shortBride = brideName.split(" ")[0];
+  const shortGroom = getFirstName(groomName);
+  const shortBride = getFirstName(brideName);
 
   return (
     <section

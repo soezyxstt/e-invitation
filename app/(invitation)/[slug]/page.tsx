@@ -5,6 +5,9 @@ import { InvitationPageClient } from "@/components/invitation/invitation-page-cl
 import Template1 from "@/components/invitation/templates/template-1";
 import Template2 from "@/components/invitation/templates/template-2";
 import Template3 from "@/components/invitation/templates/template-3";
+import Template4 from "@/components/invitation/templates/template-4";
+import Template5 from "@/components/invitation/templates/template-5";
+import Template6 from "@/components/invitation/templates/template-6";
 import type { InvitationTemplateProps } from "@/components/invitation/templates/types";
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -119,7 +122,7 @@ export default async function InvitationPage({
   // Useful for demo slugs linked from the marketing portfolio.
   const templateIdFromParam = templateParam ? parseInt(templateParam, 10) : NaN;
   const templateId =
-    !isNaN(templateIdFromParam) && [1, 2, 3].includes(templateIdFromParam)
+    !isNaN(templateIdFromParam) && [1, 2, 3, 4, 5, 6].includes(templateIdFromParam)
       ? templateIdFromParam
       : (inv.templateId ?? 1);
 
@@ -225,12 +228,12 @@ export default async function InvitationPage({
   // ── Template selection (tier-aware) ──────────────────────────────────────
   function renderTemplate() {
     switch (templateId) {
-      case 2:
-        return <Template2 {...templateProps} />;
-      case 3:
-        return <Template3 {...templateProps} />;
-      default:
-        return <Template1 {...templateProps} />;
+      case 2: return <Template2 {...templateProps} />;
+      case 3: return <Template3 {...templateProps} />;
+      case 4: return <Template4 {...templateProps} />;
+      case 5: return <Template5 {...templateProps} />;
+      case 6: return <Template6 {...templateProps} />;
+      default: return <Template1 {...templateProps} />;
     }
   }
 

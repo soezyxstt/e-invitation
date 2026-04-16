@@ -58,10 +58,20 @@ const GALLERY: { id: string; alt: string }[] = [
 
 /**
  * Musik latar instrumental bebas royalti (demo).
- * Ganti dengan URL dari Uploadthing setelah upload file asli.
+ *
+ * Untuk produksi, upload lagu ke Uploadthing dan ganti URL di bawah.
+ * Rekomendasi lagu pernikahan populer untuk demo:
+ *   - "Beautiful in White" – Westlife
+ *   - "Akad" – Payung Teduh
+ *   - "Nikah" – Juicy Luicy
+ *   - "A Thousand Years" – Christina Perri
+ *   - "Marry Me" – Train
+ *
+ * Catatan: lagu di atas berhak cipta. Upload ke Uploadthing hanya
+ * untuk penggunaan pribadi / demo internal, bukan distribusi publik.
  */
 const DEMO_MUSIC_URL =
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3";
+  "https://cdn.pixabay.com/audio/2024/11/28/audio_1e75a41093.mp3";
 
 // ── Seed data undangan ───────────────────────────────────────────────────────
 
@@ -93,6 +103,10 @@ interface InvitationSeed {
   heroPhotoId: string;
   galleryCount: number; // 0 = Tier 1 (no gallery)
   hasMusic: boolean;
+  /** Unsplash photo ID for groom portrait (Tier 2+). Omit to skip. */
+  groomPortraitPhotoId?: string;
+  /** Unsplash photo ID for bride portrait (Tier 2+). Omit to skip. */
+  bridePortraitPhotoId?: string;
   rsvps: {
     guestName: string;
     attendance: "ATTENDING" | "DECLINED" | "MAYBE";
@@ -151,6 +165,8 @@ const INVITATIONS: InvitationSeed[] = [
     heroPhotoId: "photo-1583939003579-730e3918a45a",
     galleryCount: 6,
     hasMusic: true,
+    groomPortraitPhotoId: "photo-1506794778202-cad84cf45f1d",
+    bridePortraitPhotoId: "photo-1531746020798-e6953c6e8e04",
     rsvps: [
       { guestName: "Ibu Neneng Sulastri", attendance: "ATTENDING", message: "Tos ditunggu-tunggu pisan. Mugia janten kulawarga sakinah mawaddah warahmah.", partySize: 2 },
       { guestName: "Bpk. Asrul Gunawan", attendance: "ATTENDING", message: "Selamat dan bahagia, semoga menjadi keluarga yang penuh berkah.", partySize: 4 },
@@ -181,6 +197,8 @@ const INVITATIONS: InvitationSeed[] = [
     heroPhotoId: "photo-1465495976277-4387d4b0b4c6",
     galleryCount: 8,
     hasMusic: true,
+    groomPortraitPhotoId: "photo-1564564321837-a57b7070ac4f",
+    bridePortraitPhotoId: "photo-1594824476967-48c8b964273f",
     timeline: [
       { sortOrder: 0, date: "Maret 2021", title: "Pertama Bertemu", description: "Kami pertama kali bertemu di seminar nasional kedokteran di Bandung. Sebuah perkenalan singkat yang ternyata menjadi awal dari segalanya." },
       { sortOrder: 1, date: "Agustus 2021", title: "Mulai Berteman", description: "Dari pertukaran nomor kontak, kami mulai sering berdiskusi tentang dunia medis dan hukum. Persahabatan tulus pun terjalin dengan sendirinya." },
@@ -278,6 +296,8 @@ const INVITATIONS: InvitationSeed[] = [
     heroPhotoId: "photo-1511285560929-80b456fea0bc",
     galleryCount: 7,
     hasMusic: true,
+    groomPortraitPhotoId: "photo-1500648767791-00dcc994a43e",
+    bridePortraitPhotoId: "photo-1529626455594-4ff0802cfb7e",
     rsvps: [
       { guestName: "Ibu Hj. Cucu Sumarni", attendance: "ATTENDING", message: "Alhamdulillah, insya Allah hadir. Semoga jadi keluarga barokah.", partySize: 2 },
       { guestName: "Bpk. Asep Mulyana, M.Pd.", attendance: "ATTENDING", partySize: 3 },
@@ -307,6 +327,8 @@ const INVITATIONS: InvitationSeed[] = [
     heroPhotoId: "photo-1537633552985-df8429e8048b",
     galleryCount: 8,
     hasMusic: true,
+    groomPortraitPhotoId: "photo-1507003211169-0a1dd7228f2d",
+    bridePortraitPhotoId: "photo-1438761681033-6461ffad8d80",
     rsvps: [
       { guestName: "Bpk. Drs. H. Yayan Sofyan", attendance: "ATTENDING", message: "Selamat menempuh hidup baru, semoga diberkahi.", partySize: 2 },
       { guestName: "Ibu Neneng Hasanah", attendance: "ATTENDING", partySize: 4 },
@@ -336,6 +358,8 @@ const INVITATIONS: InvitationSeed[] = [
     heroPhotoId: "photo-1550761557-cbba0db11aa8",
     galleryCount: 9,
     hasMusic: true,
+    groomPortraitPhotoId: "photo-1472099645785-5658abf4ff4e",
+    bridePortraitPhotoId: "photo-1494790108377-be9c29b29330",
     timeline: [
       { sortOrder: 0, date: "Januari 2020", title: "Pertama Bertemu", description: "Pertemuan tak terduga di konferensi ilmiah di Bandung membuka lembaran baru. Nama yang sebelumnya hanya dikenal dari karya ilmiah kini hadir sebagai wajah yang menyenangkan." },
       { sortOrder: 1, date: "April 2021", title: "Mulai Dekat", description: "Dari rekan diskusi akademis, hubungan kami tumbuh menjadi persahabatan yang hangat. Tiap percakapan selalu meninggalkan kesan yang tak mudah terlupakan." },
@@ -374,6 +398,8 @@ const INVITATIONS: InvitationSeed[] = [
     heroPhotoId: "photo-1510279775229-4b08b20eb428",
     galleryCount: 8,
     hasMusic: true,
+    groomPortraitPhotoId: "photo-1504257432389-52343af06ae3",
+    bridePortraitPhotoId: "photo-1544005313-94ddf0286df2",
     timeline: [
       { sortOrder: 0, date: "Oktober 2019", title: "Takdir Mempertemukan", description: "Di sebuah forum pemuda daerah Garut, dua jiwa yang berbeda latar belakang dipertemukan oleh semangat yang sama untuk membangun daerah." },
       { sortOrder: 1, date: "Februari 2020", title: "Sahabat Menjadi Lebih", description: "Dari teman diskusi dan kegiatan sosial, perlahan ia menyadari ada rasa yang berbeda tumbuh di hatinya. Persahabatan itu semakin erat dan bermakna." },
@@ -412,6 +438,8 @@ const INVITATIONS: InvitationSeed[] = [
     heroPhotoId: "photo-1606800052052-a08af7148866",
     galleryCount: 10,
     hasMusic: true,
+    groomPortraitPhotoId: "photo-1519085360753-af0119f7cbe7",
+    bridePortraitPhotoId: "photo-1508214751196-bcfd4ca60f91",
     timeline: [
       { sortOrder: 0, date: "Maret 2018", title: "Pertemuan Pertama", description: "Dua keluarga besar yang sudah lama saling kenal akhirnya memperkenalkan dua anak muda mereka. Sebuah pertemuan yang terasa sudah direncanakan oleh takdir." },
       { sortOrder: 1, date: "Oktober 2018", title: "Persahabatan Bermakna", description: "Dari acara keluarga ke acara keluarga, pertemuan terus terjadi. Persahabatan yang tulus pun terbentuk secara alami." },
@@ -453,6 +481,8 @@ const INVITATIONS: InvitationSeed[] = [
     heroPhotoId: "photo-1478146896981-b80fe463b330",
     galleryCount: 10,
     hasMusic: true,
+    groomPortraitPhotoId: "photo-1488161628813-04466f872be2",
+    bridePortraitPhotoId: "photo-1502685104226-ee32379fefbe",
     timeline: [
       { sortOrder: 0, date: "Juni 2017", title: "Pertama Bertemu di London", description: "Dua pelajar Indonesia bertemu di perpustakaan London School of Economics. Diskusi panjang tentang hukum bisnis internasional menjadi awal dari segalanya." },
       { sortOrder: 1, date: "Desember 2017", title: "Liburan Bersama di Edinburgh", description: "Di antara salju Edinburgh yang putih dan lampu Natal yang bersinar, perasaan itu semakin jelas. Momen yang tidak akan pernah terlupakan." },
@@ -494,6 +524,8 @@ const INVITATIONS: InvitationSeed[] = [
     heroPhotoId: "photo-1512678080530-7760d81faba6",
     galleryCount: 10,
     hasMusic: true,
+    groomPortraitPhotoId: "photo-1463453091185-61582044d556",
+    bridePortraitPhotoId: "photo-1487412720507-e7ab37603c6f",
     timeline: [
       { sortOrder: 0, date: "Juli 2019", title: "Pertama Bertemu", description: "Sebuah pertemuan di forum bisnis internasional di Jakarta. Di antara ratusan peserta, ada satu wajah yang tidak bisa terlupakan." },
       { sortOrder: 1, date: "November 2019", title: "Persahabatan yang Tumbuh", description: "Kolaborasi dalam sebuah proyek nirlaba menjadi jembatan yang mempererat hubungan kami. Rasa saling menghormati berbuah persahabatan yang tulus." },
@@ -530,8 +562,8 @@ async function main() {
   // ── 1. Tiers ────────────────────────────────────────────────────────────
   const tiers = [
     { id: 1, code: "simpel", name: "Simpel", sortOrder: 1 },
-    { id: 2, code: "geulis", name: "Geulis", sortOrder: 2 },
-    { id: 3, code: "kasep", name: "Kasep", sortOrder: 3 },
+    { id: 2, code: "elegan", name: "Elegan", sortOrder: 2 },
+    { id: 3, code: "istimewa", name: "Istimewa", sortOrder: 3 },
     { id: 4, code: "sultan", name: "Sultan", sortOrder: 4 },
   ];
 
@@ -542,7 +574,7 @@ async function main() {
       update: { code: t.code, name: t.name, sortOrder: t.sortOrder },
     });
   }
-  console.log("✓  4 Tier di-seed (Simpel / Geulis / Kasep / Sultan)");
+  console.log("✓  4 Tier di-seed (Simpel / Elegan / Istimewa / Sultan)");
 
   // ── 2. Admin user ────────────────────────────────────────────────────────
   const passwordHash = await bcrypt.hash("admin123", 10);
@@ -619,6 +651,30 @@ async function main() {
       }
     }
 
+    // ── Portrait photos (Tier 2+) ───────────────────────────────────────
+    if (data.groomPortraitPhotoId) {
+      await prisma.invitationAsset.create({
+        data: {
+          invitationId: inv.id,
+          kind: "GROOM_PORTRAIT",
+          url: u(data.groomPortraitPhotoId, 400),
+          altText: data.groomName,
+          sortOrder: 0,
+        },
+      });
+    }
+    if (data.bridePortraitPhotoId) {
+      await prisma.invitationAsset.create({
+        data: {
+          invitationId: inv.id,
+          kind: "BRIDE_PORTRAIT",
+          url: u(data.bridePortraitPhotoId, 400),
+          altText: data.brideName,
+          sortOrder: 0,
+        },
+      });
+    }
+
     // ── Background music (Tier 2+) ──────────────────────────────────────
     if (data.hasMusic) {
       await prisma.invitationAsset.create({
@@ -682,12 +738,12 @@ async function main() {
   console.log("║    /demo-simpel-2?to=Bapak+Entis          ║");
   console.log("║    /demo-simpel-3?to=Pak+Ujang            ║");
   console.log("║                                            ║");
-  console.log("║  Tier 2 (Geulis)                          ║");
+  console.log("║  Tier 2 (Elegan)                          ║");
   console.log("║    /demo-geulis?to=Ibu+Neneng             ║");
   console.log("║    /demo-geulis-2?to=Ibu+Cucu            ║");
   console.log("║    /demo-geulis-3?to=Bapak+Yayan          ║");
   console.log("║                                            ║");
-  console.log("║  Tier 3 (Kasep)                           ║");
+  console.log("║  Tier 3 (Istimewa)                        ║");
   console.log("║    /demo-kasep?to=Kang+Ujang              ║");
   console.log("║    /demo-kasep-2?to=Prof+Iwan             ║");
   console.log("║    /demo-kasep-3?to=Bapak+Cecep           ║");

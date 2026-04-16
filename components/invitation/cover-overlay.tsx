@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { getFirstName } from "@/lib/name-utils";
 
 interface CoverOverlayProps {
   groomName: string;
@@ -33,8 +34,8 @@ export function CoverOverlay({
 }: CoverOverlayProps) {
   const [pressed, setPressed] = useState(false);
 
-  const shortGroom = groomName.split(" ")[0];
-  const shortBride = brideName.split(" ")[0];
+  const shortGroom = getFirstName(groomName);
+  const shortBride = getFirstName(brideName);
 
   function handleOpen() {
     if (pressed) return;

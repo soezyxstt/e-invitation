@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { groomFallback, brideFallback } from "@/lib/portrait-fallback";
 
 interface HoverPortraitProps {
   name: string;
@@ -10,6 +11,8 @@ interface HoverPortraitProps {
   label: string;
   childOrder: string | null;
   parentsLine: string | null;
+  /** Pass "bride" for female fallback, otherwise defaults to male. */
+  gender?: "groom" | "bride";
 }
 
 export function HoverPortrait({
@@ -18,8 +21,11 @@ export function HoverPortrait({
   label,
   childOrder,
   parentsLine,
+  gender = "groom",
 }: HoverPortraitProps) {
   const [revealed, setRevealed] = useState(false);
+  const resolvedUrl =
+    portraitUrl ?? (gender === "bride" ? brideFallback(name) : groomFallback(name));
 
   return (
     <motion.div
@@ -29,9 +35,9 @@ export function HoverPortrait({
       whileInView="show"
       viewport={{ once: true, margin: "-40px" }}
     >
-      {/* Photo — only visible when revealed */}
+      {/* Photo — visible when revealed */}
       <AnimatePresence>
-        {revealed && portraitUrl && (
+        {revealed && (
           <motion.div
             key="photo"
             initial={{ opacity: 0, height: 0, marginBottom: 0 }}
@@ -43,7 +49,7 @@ export function HoverPortrait({
           >
             <div className="relative aspect-3/4 w-full overflow-hidden">
               <Image
-                src={portraitUrl}
+                src={resolvedUrl}
                 alt={name}
                 fill
                 sizes="200px"

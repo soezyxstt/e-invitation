@@ -7,8 +7,22 @@ import { RsvpForm } from "@/components/invitation/rsvp-form";
 import { Timeline } from "@/components/invitation/timeline";
 import { GuestBook } from "@/components/invitation/guest-book";
 import { QrisSection } from "@/components/invitation/qris-section";
+import {
+  BatikCornerGroup,
+  FloatingPetals,
+  CloudLayer,
+  WavyBatikEdge,
+  BatikBorder,
+  FloralSeparator,
+} from "@/components/invitation/ornament";
+import {
+  KawungBg,
+  LerengBg,
+  SemenBg,
+} from "@/components/invitation/pattern-bg";
 import { ScrollyGallery } from "./scrolly-gallery";
 import { HoverPortrait } from "./hover-portrait";
+import { getFirstName } from "@/lib/name-utils";
 import type { InvitationTemplateProps } from "../types";
 
 /**
@@ -120,8 +134,8 @@ export default function Template3({
   eventDateLabel,
   eventTimeLabel,
 }: InvitationTemplateProps) {
-  const shortGroom = inv.groomName.split(" ")[0];
-  const shortBride = inv.brideName.split(" ")[0];
+  const shortGroom = getFirstName(inv.groomName);
+  const shortBride = getFirstName(inv.brideName);
 
   return (
     <div className="min-h-screen bg-primary-cream/92 font-sans antialiased">
@@ -131,9 +145,16 @@ export default function Template3({
         </div>
       )}
 
-      {/* ── HERO: Typography only on grainy paper ────────────────────────── */}
+      {/* ── HERO: Typography only on grainy paper — NO PHOTO ─────────────── */}
       <section className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-primary-cream/88 px-8 py-24">
         <GrainOverlay opacity={0.09} />
+        {/* Batik patterns framing the pure-text hero */}
+        <KawungBg opacity={0.045} />
+        <BatikCornerGroup />
+        {/* Animated clouds at the bottom edge */}
+        <CloudLayer position="bottom" opacity={0.1} />
+        {/* Floating botanical petals */}
+        <FloatingPetals count={6} />
 
         {/* Giant watermark initials — static, behind content */}
         <div
@@ -141,7 +162,7 @@ export default function Template3({
           aria-hidden="true"
         >
           <span
-            className="font-serif font-extralight text-deep-charcoal/[0.04]"
+            className="font-serif font-extralight text-deep-charcoal/4"
             style={{ fontSize: "clamp(180px, 55vw, 360px)" }}
           >
             {shortGroom[0]}&amp;{shortBride[0]}
@@ -212,10 +233,15 @@ export default function Template3({
         </motion.div>
       </section>
 
+      {/* ── ORNAMENT DIVIDER ──────────────────────────────────────────────── */}
+      <BatikBorder />
+
       {/* ── OPENING TEXT ──────────────────────────────────────────────────── */}
       {inv.openingReligiousText && (
         <section className="relative overflow-hidden bg-primary-cream/92 px-8 py-20">
           <GrainOverlay opacity={0.06} />
+          <SemenBg opacity={0.035} />
+          <BatikCornerGroup />
           <FadeUp className="relative z-10 mx-auto max-w-xs text-center">
             <Label>Bismillah</Label>
             <div className="my-5 h-px bg-sage-green/20" />
@@ -235,6 +261,8 @@ export default function Template3({
       {/* ── COUPLE: Giant names, photo hidden until tapped ───────────────── */}
       <section className="relative overflow-hidden bg-primary-cream/88 px-8 py-20">
         <GrainOverlay opacity={0.07} />
+        <LerengBg opacity={0.04} />
+        <FloatingPetals count={4} />
         <div className="relative z-10 mx-auto max-w-sm">
           <FadeUp>
             <Label>Mempelai</Label>
@@ -249,6 +277,7 @@ export default function Template3({
               label="Mempelai Pria"
               childOrder={inv.groomChildOrder}
               parentsLine={inv.groomParentsLine}
+              gender="groom"
             />
           </FadeUp>
 
@@ -269,6 +298,7 @@ export default function Template3({
               label="Mempelai Wanita"
               childOrder={inv.brideChildOrder}
               parentsLine={inv.brideParentsLine}
+              gender="bride"
             />
           </FadeUp>
         </div>
@@ -277,6 +307,9 @@ export default function Template3({
       {/* ── SAVE THE DATE ─────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-primary-cream/92 px-8 py-20">
         <GrainOverlay opacity={0.06} />
+        <KawungBg opacity={0.04} />
+        <CloudLayer position="top" opacity={0.08} />
+        <FloatingPetals count={3} />
         <div className="relative z-10 mx-auto max-w-sm">
           <FadeUp>
             <Label>Save The Date</Label>
@@ -290,11 +323,16 @@ export default function Template3({
             <CountdownTimer eventDate={inv.eventDate} />
           </FadeUp>
         </div>
+        <CloudLayer position="bottom" opacity={0.07} />
       </section>
+
+      {/* ── BATIK DIVIDER ─────────────────────────────────────────────────── */}
+      <BatikBorder />
 
       {/* ── EVENT DETAILS ─────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-primary-cream/88 px-8 py-20">
         <GrainOverlay opacity={0.07} />
+        <SemenBg opacity={0.03} />
         <div className="relative z-10 mx-auto max-w-sm space-y-5">
           <FadeUp>
             <Label>Informasi Acara</Label>
@@ -343,6 +381,8 @@ export default function Template3({
       {isTier3Plus && timelineEvents.length > 0 && (
         <section className="relative overflow-hidden bg-primary-cream/92 px-8 py-20">
           <GrainOverlay opacity={0.06} />
+          <LerengBg opacity={0.04} />
+          <BatikCornerGroup />
           <div className="relative z-10 mx-auto max-w-sm">
             <FadeUp>
               <Label>Perjalanan Cinta</Label>
@@ -359,6 +399,8 @@ export default function Template3({
       {inv.status === "PUBLISHED" && (
         <section className="relative overflow-hidden bg-primary-cream/88 px-8 py-20">
           <GrainOverlay opacity={0.07} />
+          <KawungBg opacity={0.035} />
+          <BatikCornerGroup />
           <div className="relative z-10 mx-auto max-w-sm">
             <FadeUp>
               <Label>Konfirmasi Kehadiran</Label>
@@ -383,6 +425,7 @@ export default function Template3({
       {isTier3Plus && (
         <section className="relative overflow-hidden bg-primary-cream/92 px-8 py-20">
           <GrainOverlay opacity={0.06} />
+          <SemenBg opacity={0.03} />
           <div className="relative z-10 mx-auto max-w-sm">
             <FadeUp>
               <Label>Buku Tamu</Label>
@@ -395,8 +438,11 @@ export default function Template3({
         </section>
       )}
 
-      {/* ── QRIS (Tier 4) ───────────────────────────────────────────────── */}
-      {isTier4 && qrisData && (
+      {/* ── WAVY ORNAMENT ────────────────────────────────────────────────── */}
+      <WavyBatikEdge />
+
+      {/* ── AMPLOP DIGITAL / QRIS ─────────────────────────────────────────── */}
+      {qrisData && (
         <QrisSection
           qrisUrl={qrisData.qrisUrl}
           bankName={qrisData.bankName}
@@ -427,11 +473,17 @@ export default function Template3({
       {/* ── FOOTER ───────────────────────────────────────────────────────── */}
       <footer className="relative overflow-hidden bg-primary-cream/88 px-8 py-20 text-center">
         <GrainOverlay opacity={0.09} />
+        <KawungBg opacity={0.04} />
+        <BatikCornerGroup />
+        <FloatingPetals count={5} />
         <FadeUp className="relative z-10">
-          {/* Minimal closing typography */}
-          <SageLine className="mx-auto" />
-          <p className="mt-8 font-serif font-extralight text-deep-charcoal"
-            style={{ fontSize: "clamp(22px, 6vw, 36px)" }}>
+          {/* Floral divider at top of footer */}
+          <FloralSeparator className="opacity-50" />
+          <SageLine className="mx-auto mt-6" />
+          <p
+            className="mt-8 font-serif font-extralight text-deep-charcoal"
+            style={{ fontSize: "clamp(22px, 6vw, 36px)" }}
+          >
             {shortGroom}
             <span className="mx-4 font-serif italic text-sage-green">&amp;</span>
             {shortBride}

@@ -9,9 +9,8 @@ const features = [
       "Setiap undangan ditulis dalam Basa Sunda Lemes yang santun, lengkap dengan penulisan Gelar Keturunan (silsilah keluarga) yang tepat dan hormat — sesuai adat istiadat Garut.",
     highlight: "Someah hadé ka semah",
     ornament: "ᮞᮧᮙᮦᮃᮂ",
-    bgColor: "bg-primary-cream/95",
     accentColor: "text-muted-gold",
-    borderColor: "border-wood-brown/25",
+    isDark: false,
   },
   {
     id: "estetika",
@@ -21,22 +20,19 @@ const features = [
       "Ornamen digital terinspirasi langsung dari motif Batik Garutan yang khas — merak ngibing, rereng, dan kembang latar — dihadirkan sebagai elemen dekoratif yang anggun.",
     highlight: "Warisan yang terus hidup",
     ornament: "❋",
-    bgColor: "bg-wood-brown",
     accentColor: "text-muted-gold",
-    borderColor: "border-muted-gold/20",
     isDark: true,
   },
   {
     id: "mc",
     eyebrow: "Fitur Eksklusif",
-    title: "Dashboard\nSinergi MC",
+    title: "Kendali Penuh\ndi Hari Spesial",
     description:
-      "Khusus Tier Kasep & Sultan: MC mendapat akses dashboard real-time `/[slug]/mc` untuk memonitor rundown, konfirmasi kehadiran tamu, dan live greeting wall saat hari H.",
+      "Khusus Paket Istimewa & Sultan: tersedia halaman khusus untuk MC agar rundown acara, konfirmasi tamu, dan ucapan selamat bisa dipantau langsung saat hari pernikahan.",
     highlight: "Hari H tanpa hambatan",
     ornament: "◈",
-    bgColor: "bg-wood-brown/12",
     accentColor: "text-sage-green",
-    borderColor: "border-wood-brown/25",
+    isDark: false,
   },
 ];
 
@@ -59,7 +55,7 @@ export function Features() {
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
         {/* Section header */}
-        <FadeInSection className="mb-16">
+        <FadeInSection className="mb-20">
           <div className="mb-5 flex items-center gap-4">
             <div className="h-px w-10 bg-muted-gold/50" />
             <span
@@ -89,78 +85,88 @@ export function Features() {
           </div>
         </FadeInSection>
 
-        {/* Feature cards */}
-        <div className="grid gap-6 lg:grid-cols-3">
+        {/* Feature strips */}
+        <div className="flex flex-col divide-y divide-wood-brown/10">
           {features.map((f, i) => (
             <FadeInSection key={f.id} delay={i * 0.12}>
               <div
-                className={`relative flex h-full flex-col overflow-hidden rounded-3xl border p-8 ${f.bgColor} ${f.borderColor} group`}
+                className={`group relative flex flex-col lg:flex-row gap-8 lg:gap-16 py-12 lg:py-16 transition-colors duration-300 ${
+                  f.isDark
+                    ? "lg:-mx-10 lg:px-10 rounded-none hover:bg-wood-brown/[0.04]"
+                    : "hover:bg-wood-brown/[0.03]"
+                }`}
               >
-                {/* Ornament */}
-                <div
-                  className={`pointer-events-none absolute right-8 top-6 select-none font-serif text-6xl opacity-5 ${
-                    f.isDark ? "text-muted-gold" : "text-wood-brown"
-                  }`}
-                  style={{ fontFamily: "var(--font-serif)" }}
-                  aria-hidden
-                >
-                  {f.ornament}
-                </div>
-
-                <div className="flex flex-1 flex-col gap-5">
-                  {/* Eyebrow */}
+                {/* Number & eyebrow */}
+                <div className="flex lg:flex-col items-center lg:items-start gap-4 lg:gap-3 lg:w-40 shrink-0">
                   <span
-                    className={`text-xs tracking-[0.3em] uppercase ${f.accentColor}`}
+                    className="font-serif text-5xl lg:text-7xl text-wood-brown/8 leading-none tabular-nums"
+                    style={{ fontFamily: "var(--font-serif)" }}
+                    aria-hidden
+                  >
+                    0{i + 1}
+                  </span>
+                  <span
+                    className={`text-[10px] tracking-[0.35em] uppercase ${f.accentColor} whitespace-nowrap`}
                     style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
                   >
                     {f.eyebrow}
                   </span>
+                </div>
 
-                  {/* Title */}
+                {/* Title */}
+                <div className="lg:w-64 shrink-0">
                   <h3
-                    className={`whitespace-pre-line font-serif text-3xl leading-tight ${
-                      f.isDark ? "text-primary-cream" : "text-wood-brown"
-                    }`}
+                    className="whitespace-pre-line font-serif text-3xl lg:text-4xl leading-tight text-wood-brown"
                     style={{ fontFamily: "var(--font-serif)" }}
                   >
                     {f.title}
                   </h3>
 
-                  {/* Gold divider */}
-                  <div className="batik-divider" />
+                  {/* Decorative ornament */}
+                  <span
+                    className="mt-4 block font-serif text-4xl text-wood-brown/10 leading-none select-none"
+                    style={{ fontFamily: "var(--font-serif)" }}
+                    aria-hidden
+                  >
+                    {f.ornament}
+                  </span>
+                </div>
 
-                  {/* Description */}
+                {/* Content */}
+                <div className="flex-1 flex flex-col justify-between gap-6">
                   <p
-                    className={`flex-1 text-sm leading-relaxed ${
-                      f.isDark ? "text-primary-cream/60" : "text-wood-brown/80"
-                    }`}
+                    className="text-base leading-relaxed text-wood-brown/75"
                     style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
                   >
                     {f.description}
                   </p>
 
                   {/* Highlight quote */}
-                  <div
-                    className={`border-l-2 pl-4 ${
-                      f.isDark ? "border-muted-gold/40" : "border-muted-gold/50"
-                    }`}
-                  >
+                  <div className="flex items-center gap-4">
+                    <div className={`h-px flex-1 max-w-[3rem] bg-muted-gold/30`} />
                     <p
-                      className={`font-serif text-base italic ${
-                        f.isDark ? "text-muted-gold/80" : "text-muted-gold"
-                      }`}
+                      className={`font-serif text-base italic ${f.accentColor}`}
                       style={{ fontFamily: "var(--font-serif)" }}
                     >
                       &ldquo;{f.highlight}&rdquo;
                     </p>
                   </div>
                 </div>
+
+                {/* Right edge accent — visible on hover */}
+                <div
+                  className={`absolute right-0 top-1/2 -translate-y-1/2 h-12 w-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
+                    f.accentColor === "text-sage-green"
+                      ? "bg-sage-green/40"
+                      : "bg-muted-gold/40"
+                  }`}
+                />
               </div>
             </FadeInSection>
           ))}
         </div>
 
-        {/* Batik-inspired decorative band */}
+        {/* Bottom CTA band */}
         <FadeInSection delay={0.4} className="mt-20">
           <div className="relative overflow-hidden rounded-2xl border border-wood-brown/20 bg-wood-brown/[0.06] px-8 py-7">
             <div
@@ -185,16 +191,14 @@ export function Features() {
                   className="mt-1 text-sm text-wood-brown/80"
                   style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
                 >
-                  Demo interaktif tersedia — rasakan pengalaman seperti tamu undangan nyata.
+                  Preview interaktif tersedia — rasakan pengalaman seperti tamu undangan nyata.
                 </p>
               </div>
               <a
-                href="https://wa.me/6281234567890?text=Saya%20ingin%20melihat%20demo%20undangan%20SentuhUndang"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#preview"
                 className="inline-flex shrink-0 items-center gap-2 rounded-full bg-wood-brown px-7 py-3.5 text-sm font-medium text-primary-cream transition-colors hover:bg-wood-brown/90"
               >
-                Minta Demo Gratis
+                Lihat Preview Desain
               </a>
             </div>
           </div>
