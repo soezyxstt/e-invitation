@@ -31,7 +31,7 @@ export default async function NewInvitationPage() {
         </p>
       </div>
 
-      <div className="rounded-2xl border border-stone-200 bg-[#faf8f3] p-6 shadow-sm">
+      <div className="rounded-2xl border border-stone-200 bg-primary-cream p-6 shadow-sm">
         <InvitationForm tiers={tiers} />
       </div>
     </div>

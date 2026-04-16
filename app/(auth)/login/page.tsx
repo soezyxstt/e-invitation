@@ -32,8 +32,8 @@ function LoginForm() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#f5f0e6] px-4 text-stone-800">
-      <div className="w-full max-w-sm rounded-2xl border border-stone-200 bg-[#faf8f3] p-8 shadow-sm">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-primary-cream px-4 text-stone-800">
+      <div className="w-full max-w-sm rounded-2xl border border-stone-200 bg-primary-cream p-8 shadow-sm">
         <h1 className="text-center text-xl font-semibold tracking-tight text-stone-900">
           Sentuh Undang
         </h1>
@@ -70,7 +70,7 @@ function LoginForm() {
           <button
             type="submit"
             disabled={pending}
-            className="mt-2 rounded-lg bg-[#6b7f5a] py-2.5 text-sm font-medium text-white transition hover:bg-[#5a6b4b] disabled:opacity-60"
+            className="mt-2 rounded-lg bg-sage-green py-2.5 text-sm font-medium text-white transition hover:bg-sage-green/85 disabled:opacity-60"
           >
             {pending ? "Memproses…" : "Masuk"}
           </button>
@@ -84,7 +84,7 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center bg-[#f5f0e6] text-stone-600">
+        <div className="flex min-h-screen items-center justify-center bg-primary-cream text-stone-600">
           Memuat…
         </div>
       }

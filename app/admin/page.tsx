@@ -25,13 +25,13 @@ export default async function AdminOverviewPage() {
         Statistik undangan dan RSVP untuk akun Anda.
       </p>
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-xl border border-stone-200 bg-[#faf8f3] p-5 shadow-sm">
+        <div className="rounded-xl border border-stone-200 bg-primary-cream p-5 shadow-sm">
           <p className="text-sm font-medium text-stone-600">Jumlah undangan</p>
           <p className="mt-2 text-3xl font-semibold tabular-nums text-stone-900">
             {invitationCount}
           </p>
         </div>
-        <div className="rounded-xl border border-stone-200 bg-[#faf8f3] p-5 shadow-sm">
+        <div className="rounded-xl border border-stone-200 bg-primary-cream p-5 shadow-sm">
           <p className="text-sm font-medium text-stone-600">Total RSVP</p>
           <p className="mt-2 text-3xl font-semibold tabular-nums text-stone-900">
             {rsvpCount}

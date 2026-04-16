@@ -14,7 +14,7 @@ import {
   Loader2,
   CheckCircle2,
   XCircle,
-  Link as LinkIcon,
+  LayoutTemplate,
 } from "lucide-react";
 
 // ── Utilitas ────────────────────────────────────────────────────────────────
@@ -41,8 +41,8 @@ function SectionTitle({
 }) {
   return (
     <div className="flex items-center gap-2.5 border-b border-stone-200 pb-3">
-      <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#e8ebe3]">
-        <Icon size={13} className="text-[#3d5a2b]" />
+      <div className="flex h-7 w-7 items-center justify-center rounded-full bg-sage-green/15">
+        <Icon size={13} className="text-sage-green" />
       </div>
       <h2 className="text-sm font-semibold uppercase tracking-wide text-stone-600">{children}</h2>
     </div>
@@ -81,7 +81,7 @@ function Field({
 }
 
 const inputCls =
-  "rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm text-stone-900 outline-none placeholder:text-stone-400 ring-[#6b7f5a] focus:border-[#6b7f5a] focus:ring-2 transition";
+  "rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm text-stone-900 outline-none placeholder:text-stone-400 ring-sage-green focus:border-sage-green focus:ring-2 transition";
 
 const selectCls = `${inputCls} cursor-pointer`;
 
@@ -106,6 +106,73 @@ const TEMPLATES: Record<string, { label: string; text: string }> = {
     text: "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا — Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu istri-istri (Q.S. Ar-Rum: 21)",
   },
 };
+
+// ── Desain template choices ──────────────────────────────────────────────────
+
+const DESIGN_TEMPLATES = [
+  {
+    id: 1,
+    name: "Editorial",
+    description: "Centered serif hero, horizontal carousel gallery, floral ornaments.",
+    previewBg: "bg-surface-night",
+    preview: (
+      <div className="flex h-full flex-col items-center justify-end pb-3 pt-2">
+        <div className="h-px w-10 bg-muted-gold/40" />
+        <div className="mt-1 h-3 w-16 rounded-sm bg-primary-cream/80" />
+        <div className="mt-0.5 h-2 w-10 rounded-sm bg-muted-gold/60" />
+        <div className="mt-2 flex gap-1.5">
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className={`h-1.5 rounded-full ${i === 1 ? "w-4 bg-muted-gold" : "w-1.5 bg-muted-gold/30"}`} />
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 2,
+    name: "Modern Grid",
+    description: "Oversized typography hero, Pinterest masonry gallery, asymmetric sections.",
+    previewBg: "bg-surface-night",
+    preview: (
+      <div className="flex h-full items-end px-3 pb-3">
+        <div>
+          <div className="h-6 w-20 rounded-[2px] bg-primary-cream/80" />
+          <div className="mt-0.5 h-5 w-14 rounded-[2px] bg-primary-cream/60" />
+          <div className="mt-1 h-px w-10 bg-muted-gold/60" />
+        </div>
+        <div className="ml-auto flex gap-1">
+          <div className="flex flex-col gap-1">
+            <div className="h-8 w-8 rounded-[2px] bg-muted-gold/20" />
+            <div className="h-5 w-8 rounded-[2px] bg-muted-gold/15" />
+          </div>
+          <div className="mt-2 flex flex-col gap-1">
+            <div className="h-5 w-8 rounded-[2px] bg-muted-gold/20" />
+            <div className="h-8 w-8 rounded-[2px] bg-muted-gold/15" />
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 3,
+    name: "Minimalist Card",
+    description: "Typography-only hero with paper texture, card-based layout, vertical magazine gallery.",
+    previewBg: "bg-primary-cream",
+    preview: (
+      <div className="flex h-full flex-col items-center justify-center gap-1.5 px-4">
+        <div className="h-px w-8 bg-muted-gold/40" />
+        <div className="h-4 w-14 rounded-[2px] bg-wood-brown/25" />
+        <div className="h-2 w-6 rounded-[2px] bg-muted-gold/50" />
+        <div className="h-4 w-14 rounded-[2px] bg-wood-brown/25" />
+        <div className="h-px w-8 bg-muted-gold/40" />
+        <div className="mt-1 w-full rounded-[3px] border border-muted-gold/60 bg-white p-1 shadow-sm">
+          <div className="h-2 w-3/4 rounded-sm bg-wood-brown/30" />
+          <div className="mt-1 h-2 w-1/2 rounded-sm bg-wood-brown/20" />
+        </div>
+      </div>
+    ),
+  },
+];
 
 // ── Komponen hero uploader ───────────────────────────────────────────────────
 
@@ -150,20 +217,20 @@ function HeroUploader({
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
-        className="group relative flex min-h-[140px] w-full flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-stone-300 bg-stone-50 px-4 py-6 transition hover:border-[#6b7f5a] hover:bg-[#f7f9f5]"
+        className="group relative flex min-h-[140px] w-full flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-stone-300 bg-stone-50 px-4 py-6 transition hover:border-sage-green hover:bg-sage-green/5"
       >
         {uploading && (
-          <Loader2 size={28} className="animate-spin text-[#6b7f5a]" />
+          <Loader2 size={28} className="animate-spin text-sage-green" />
         )}
         {!uploading && done && (
           <>
-            <CheckCircle2 size={28} className="text-[#6b7f5a]" />
+            <CheckCircle2 size={28} className="text-sage-green" />
             <p className="text-sm text-stone-600">Upload berhasil!</p>
           </>
         )}
         {!uploading && !done && (
           <>
-            <ImagePlus size={28} className="text-stone-400 transition group-hover:text-[#6b7f5a]" />
+            <ImagePlus size={28} className="text-stone-400 transition group-hover:text-sage-green" />
             <div className="text-center">
               <p className="text-sm font-medium text-stone-700">Klik untuk unggah foto utama</p>
               <p className="mt-0.5 text-xs text-stone-500">JPG, PNG, WebP — maks 4 MB</p>
@@ -189,7 +256,7 @@ function HeroUploader({
       {value && (
         <p className="break-all text-xs text-stone-500">
           URL tersimpan:{" "}
-          <a href={value} target="_blank" rel="noopener noreferrer" className="text-[#6b7f5a] underline">
+          <a href={value} target="_blank" rel="noopener noreferrer" className="text-sage-green underline">
             {value}
           </a>
         </p>
@@ -214,6 +281,7 @@ export function InvitationForm({ tiers }: { tiers: { id: number; name: string; c
   const [templateKey, setTemplateKey] = useState("");
   const [openingText, setOpeningText] = useState("");
   const [heroUrl, setHeroUrl] = useState("");
+  const [designTemplateId, setDesignTemplateId] = useState(1);
 
   // Auto-generate slug dari nama mempelai
   useEffect(() => {
@@ -288,6 +356,43 @@ export function InvitationForm({ tiers }: { tiers: { id: number; name: string; c
             ))}
           </select>
         </Field>
+      </section>
+
+      {/* ─ Desain / Template ───────────────────────────────────────────── */}
+      <section className="flex flex-col gap-5">
+        <SectionTitle icon={LayoutTemplate}>Desain Layout</SectionTitle>
+        <p className="text-xs text-stone-500">
+          Pilih gaya tampilan undangan. Perbedaan antar desain bukan hanya warna, melainkan struktur layout yang berbeda.
+        </p>
+        <input type="hidden" name="templateId" value={designTemplateId} />
+        <div className="grid gap-3 sm:grid-cols-3">
+          {DESIGN_TEMPLATES.map((dt) => (
+            <button
+              key={dt.id}
+              type="button"
+              onClick={() => setDesignTemplateId(dt.id)}
+              className={`flex flex-col gap-2 rounded-xl border-2 p-4 text-left transition ${
+                designTemplateId === dt.id
+                  ? "border-sage-green bg-sage-green/5 shadow-sm"
+                  : "border-stone-200 bg-white hover:border-stone-300 hover:bg-stone-50"
+              }`}
+            >
+              {/* Visual preview thumbnail */}
+              <div className={`h-24 w-full overflow-hidden rounded-lg ${dt.previewBg}`}>
+                {dt.preview}
+              </div>
+              <div>
+                <div className="flex items-center gap-1.5">
+                  {designTemplateId === dt.id && (
+                    <CheckCircle2 size={12} className="shrink-0 text-sage-green" />
+                  )}
+                  <p className="text-xs font-semibold text-stone-800">{dt.name}</p>
+                </div>
+                <p className="mt-0.5 text-[10px] leading-snug text-stone-500">{dt.description}</p>
+              </div>
+            </button>
+          ))}
+        </div>
       </section>
 
       {/* ─ Mempelai Pria ───────────────────────────────────────────────── */}
@@ -477,7 +582,7 @@ export function InvitationForm({ tiers }: { tiers: { id: number; name: string; c
         <button
           type="submit"
           disabled={pending}
-          className="inline-flex items-center gap-2 rounded-lg bg-[#6b7f5a] px-5 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-[#5a6b4b] disabled:opacity-60"
+          className="inline-flex items-center gap-2 rounded-lg bg-sage-green px-5 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-sage-green/85 disabled:opacity-60"
         >
           {pending && <Loader2 size={14} className="animate-spin" />}
           {pending ? "Menyimpan…" : "Simpan Undangan"}

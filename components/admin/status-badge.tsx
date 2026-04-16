@@ -7,7 +7,7 @@ const map: Record<InvitationStatus, { label: string; className: string }> = {
   },
   PUBLISHED: {
     label: "Tayang",
-    className: "bg-[#e8ebe3] text-[#3d5a2b] border-[#c8d6b8]",
+    className: "bg-sage-green/15 text-sage-green border-sage-green/30",
   },
   ARCHIVED: {
     label: "Arsip",

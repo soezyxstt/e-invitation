@@ -31,7 +31,7 @@ export default async function InvitationsPage() {
         </div>
         <Link
           href="/admin/invitations/new"
-          className="inline-flex items-center gap-2 rounded-lg bg-[#6b7f5a] px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-[#5a6b4b]"
+          className="inline-flex items-center gap-2 rounded-lg bg-sage-green px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-sage-green/85"
         >
           <Plus size={15} />
           Tambah Undangan
@@ -40,9 +40,9 @@ export default async function InvitationsPage() {
 
       {/* Empty state */}
       {invitations.length === 0 && (
-        <div className="mt-12 flex flex-col items-center justify-center rounded-2xl border border-dashed border-stone-300 bg-[#faf8f3] py-16 text-center">
-          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#e8ebe3]">
-            <Plus size={22} className="text-[#6b7f5a]" />
+        <div className="mt-12 flex flex-col items-center justify-center rounded-2xl border border-dashed border-stone-300 bg-primary-cream py-16 text-center">
+          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-sage-green/15">
+            <Plus size={22} className="text-sage-green" />
           </div>
           <p className="text-base font-medium text-stone-700">Belum ada undangan</p>
           <p className="mt-1 text-sm text-stone-500">
@@ -50,7 +50,7 @@ export default async function InvitationsPage() {
           </p>
           <Link
             href="/admin/invitations/new"
-            className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[#6b7f5a] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#5a6b4b]"
+            className="mt-5 inline-flex items-center gap-2 rounded-lg bg-sage-green px-4 py-2 text-sm font-medium text-white transition hover:bg-sage-green/85"
           >
             <Plus size={14} />
             Tambah Undangan
@@ -63,7 +63,7 @@ export default async function InvitationsPage() {
         <div className="mt-6 overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
           <table className="w-full min-w-[640px] text-sm">
             <thead>
-              <tr className="border-b border-stone-100 bg-[#faf8f3]">
+              <tr className="border-b border-stone-100 bg-primary-cream">
                 <th className="px-5 py-3.5 text-left text-xs font-medium uppercase tracking-wide text-stone-500">
                   Judul
                 </th>
@@ -83,7 +83,7 @@ export default async function InvitationsPage() {
             </thead>
             <tbody className="divide-y divide-stone-100">
               {invitations.map((inv) => (
-                <tr key={inv.id} className="transition hover:bg-[#fafaf7]">
+                <tr key={inv.id} className="transition hover:bg-primary-cream/80">
                   <td className="px-5 py-4">
                     <p className="font-medium text-stone-900">{inv.title}</p>
                     <p className="mt-0.5 text-xs text-stone-500">
@@ -94,7 +94,7 @@ export default async function InvitationsPage() {
                     {inv.slug}
                   </td>
                   <td className="px-5 py-4">
-                    <span className="rounded-md bg-[#e8ebe3] px-2 py-0.5 text-xs font-medium text-[#3d5a2b]">
+                    <span className="rounded-md bg-sage-green/15 px-2 py-0.5 text-xs font-medium text-sage-green">
                       {inv.tier.name}
                     </span>
                   </td>
@@ -114,7 +114,7 @@ export default async function InvitationsPage() {
                       <Link
                         href={`/admin/invitations/${inv.id}/edit`}
                         className="flex h-8 w-8 items-center justify-center rounded-lg border border-stone-200 text-stone-500 transition hover:border-stone-300 hover:text-stone-800"
-                        title="Edit"
+                        title="Edit & Timeline"
                       >
                         <Pencil size={13} />
                       </Link>

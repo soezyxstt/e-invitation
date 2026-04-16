@@ -1,26 +1,245 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Central theme — OKLCH (Zamrud Priangan palette) */
+@theme {
+  /*
+   * Zamrud Priangan — "Royal Emerald Heritage"
+   * Terinspirasi dari zamrud Priangan, ukiran emas pada batik Garutan,
+   * dan kemewahan undangan fisik premium berbasis hijau kerajaan.
+   *
+   * Ivory Mist     | Latar   | oklch(97% 0.008 145) — putih gading dengan sentuhan hijau sejuk,
+   *                                                    seperti kertas fine-art premium
+   * Deep Forest    | Gelap   | oklch(20% 0.055 162) — hijau hutan sangat gelap untuk teks & panel,
+   *                                                    hangat namun tetap berwibawa
+   * Warm Champagne | Aksen   | oklch(83% 0.095 90)  — champagne emas hangat, kontras mewah
+   *                                                    klasik berpasangan dengan emerald
+   * Royal Emerald  | Panel 1 | oklch(52% 0.220 152) — hijau zamrud royal, jenuh & berprestise,
+   *                                                    warna dominan palete ini
+   * Hunter Green   | Panel 2 | oklch(40% 0.130 162) — hijau hunter gelap untuk kedalaman & variasi
+   */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Descriptive palette */
+  --color-ivory-mist:      oklch(97% 0.008 145);
+  --color-deep-forest:     oklch(20% 0.055 162);
+  --color-warm-champagne:  oklch(83% 0.095 90);
+  --color-royal-emerald:   oklch(52% 0.220 152);
+  --color-hunter-green:    oklch(40% 0.130 162);
+
+  /* Compatibility aliases — semua komponen tetap berjalan tanpa perubahan */
+  --color-primary-cream: var(--color-ivory-mist);
+  --color-deep-charcoal: var(--color-deep-forest);
+  --color-muted-gold:    var(--color-warm-champagne);
+  --color-sage-green:    var(--color-royal-emerald);
+  --color-wood-brown:    var(--color-hunter-green);
+
+  /* Semantic extensions — diselaraskan dengan tema hijau */
+  --color-surface-night: oklch(11% 0.045 162);
+  --color-whatsapp:      oklch(62% 0.19 155);
+  --color-accent-ember:  oklch(52% 0.17 45);
+  --color-gold-shine:    oklch(87% 0.12 90);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-serif);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-primary-cream);
+  color: var(--color-deep-charcoal);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Invitation-scoped font overrides — (invitation)/layout.tsx */
+.inv-layout .font-sans {
+  font-family: var(--font-sans-inv, var(--font-geist-sans)), ui-sans-serif, system-ui,
+    sans-serif;
+}
+
+.inv-layout .font-serif,
+.inv-layout [class*="font-serif"] {
+  font-family: var(--font-serif), ui-serif, Georgia, serif;
+}
+
+.font-serif {
+  font-family: var(--font-serif), ui-serif, Georgia, serif;
+}
+
+.marketing-bg {
+  background-color: var(--color-primary-cream);
+}
+
+/* Grain/noise texture overlay for luxury sections */
+.grain-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+}
+
+/* Batik decorative divider */
+.batik-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklch, var(--color-muted-gold) 75%, transparent) 20%,
+    color-mix(in oklch, var(--color-muted-gold) 100%, transparent) 50%,
+    color-mix(in oklch, var(--color-muted-gold) 75%, transparent) 80%,
+    transparent
+  );
+}
+
+/* Marquee scroll for logo strip */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+/* ── Invitation / admin: gradients & shadows (theme tokens only in TSX) ── */
+
+.text-gradient-gold-live {
+  background-image: linear-gradient(
+    135deg,
+    var(--color-muted-gold) 0%,
+    var(--color-gold-shine) 40%,
+    var(--color-muted-gold) 60%,
+    var(--color-muted-gold) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-radial-gold-header {
+  background: radial-gradient(
+    ellipse 80% 50% at 50% 0%,
+    color-mix(in oklch, var(--color-gold-shine) 12%, transparent),
+    transparent
+  );
+}
+
+.bg-radial-muted-gold-soft {
+  background: radial-gradient(
+    ellipse 60% 40% at 50% 0%,
+    color-mix(in oklch, var(--color-muted-gold) 8%, transparent),
+    transparent
+  );
+}
+
+.avatar-ring-editorial {
+  box-shadow:
+    0 0 0 5px var(--color-primary-cream),
+    0 0 0 7px color-mix(in oklch, var(--color-muted-gold) 28%, transparent),
+    0 8px 32px -8px color-mix(in oklch, var(--color-surface-night) 25%, transparent);
+}
+
+.inv-hero-vignette {
+  box-shadow: inset 0 0 80px color-mix(in oklch, var(--color-surface-night) 8%, transparent);
+}
+
+.scanner-backdrop-dim {
+  box-shadow: 0 0 0 9999px color-mix(in oklch, var(--color-surface-night) 45%, transparent);
+}
+
+.shadow-template2-float {
+  box-shadow: 0 32px 80px -16px color-mix(in oklch, var(--color-surface-night) 90%, transparent);
+}
+
+.shadow-template2-float-strong {
+  box-shadow: 0 32px 80px -12px color-mix(in oklch, var(--color-surface-night) 95%, transparent);
+}
+
+.shadow-t3-card {
+  box-shadow: 0 8px 40px -12px color-mix(in oklch, var(--color-wood-brown) 18%, transparent);
+}
+
+.shadow-inv-narrow {
+  box-shadow: 0 0 80px color-mix(in oklch, var(--color-surface-night) 70%, transparent);
+}
+
+@media (min-width: 1024px) {
+  .invitation-column-shadow {
+    box-shadow: 0 0 80px color-mix(in oklch, var(--color-surface-night) 70%, transparent);
+  }
+}
+
+.maps-embed-inset {
+  box-shadow: inset 0 0 20px color-mix(in oklch, var(--color-surface-night) 8%, transparent);
+}
+
+.bg-instagram-filter-cta {
+  background: linear-gradient(
+    to bottom right,
+    color-mix(in oklch, var(--color-primary-cream) 85%, white),
+    color-mix(in oklch, var(--color-muted-gold) 12%, var(--color-primary-cream))
+  );
+}
+
+.bg-gradient-instagram-icon {
+  background: linear-gradient(
+    to bottom right,
+    var(--color-accent-ember),
+    color-mix(in oklch, var(--color-accent-ember) 85%, var(--color-muted-gold))
+  );
+}
+
+.shadow-accent-ember-ring {
+  box-shadow:
+    0 0 0 3px var(--color-surface-night),
+    0 0 0 5px color-mix(in oklch, var(--color-accent-ember) 35%, transparent);
+}
+
+/* Cover overlay (invitation open screen) */
+.cover-hero-fallback {
+  background: radial-gradient(
+    ellipse 80% 80% at 50% 60%,
+    var(--color-deep-charcoal),
+    var(--color-surface-night)
+  );
+}
+
+.cover-vignette-top {
+  background: radial-gradient(
+    ellipse 100% 60% at 50% 0%,
+    var(--color-surface-night) 0%,
+    transparent 100%
+  );
+}
+
+.cover-vignette-bottom {
+  background: radial-gradient(
+    ellipse 100% 55% at 50% 100%,
+    var(--color-surface-night) 0%,
+    transparent 100%
+  );
+}
+
+.cover-vignette-left {
+  background: radial-gradient(
+    ellipse 50% 100% at 0% 50%,
+    color-mix(in oklch, var(--color-surface-night) 60%, transparent) 0%,
+    transparent 100%
+  );
+}
+
+.cover-vignette-right {
+  background: radial-gradient(
+    ellipse 50% 100% at 100% 50%,
+    color-mix(in oklch, var(--color-surface-night) 60%, transparent) 0%,
+    transparent 100%
+  );
 }
