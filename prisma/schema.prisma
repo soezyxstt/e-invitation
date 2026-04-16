@@ -24,6 +24,8 @@ enum InvitationAssetKind {
   GALLERY_IMAGE
   BACKGROUND_MUSIC
   VIDEO_BACKGROUND
+  GROOM_PORTRAIT
+  BRIDE_PORTRAIT
 }
 
 enum RsvpAttendance {

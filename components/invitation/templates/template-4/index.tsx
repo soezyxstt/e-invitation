@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { MapPin, Calendar, Clock, Tv2, Heart } from "lucide-react";
@@ -135,10 +136,12 @@ function Appear({
   children,
   delay = 0,
   className = "",
+  style,
 }: {
   children: React.ReactNode;
   delay?: number;
   className?: string;
+  style?: CSSProperties;
 }) {
   return (
     <motion.div
@@ -147,6 +150,7 @@ function Appear({
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}
+      style={style}
     >
       {children}
     </motion.div>

@@ -239,7 +239,7 @@ export default function Template2({
           <p className="mt-0.5 font-mono text-xs text-wood-brown">{eventTimeLabel} WIB</p>
         </SlideIn>
         <SlideIn from="bottom" delay={0.12} className="relative z-10 mt-8">
-          <CountdownTimer eventDate={inv.eventDate} variant="light" />
+          <CountdownTimer eventDate={inv.eventDate} variant="dark" />
         </SlideIn>
         <CloudLayer position="bottom" opacity={0.05} />
       </section>
