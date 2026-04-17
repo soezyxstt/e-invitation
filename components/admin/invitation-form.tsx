@@ -15,6 +15,7 @@ import {
   CheckCircle2,
   XCircle,
   LayoutTemplate,
+  Music,
 } from "lucide-react";
 
 // ── Utilitas ────────────────────────────────────────────────────────────────
@@ -569,6 +570,26 @@ export function InvitationForm({ tiers }: { tiers: { id: number; name: string; c
         </p>
         <HeroUploader value={heroUrl} onChange={setHeroUrl} />
         <FieldError msgs={state.errors?.heroImageUrl} />
+      </section>
+
+      {/* ─ Musik latar (opsional) ─────────────────────────────────────── */}
+      <section className="flex flex-col gap-5">
+        <SectionTitle icon={Music}>Musik latar (opsional)</SectionTitle>
+        <p className="text-xs text-stone-500">
+          Untuk Paket Geulis ke atas: unggah file MP3 ke Uploadthing, lalu tempel URL-nya (tersimpan di
+          kolom <code className="text-stone-600">songUrl</code>). Kosongkan untuk memakai aset musik
+          dari galeri admin jika ada, atau fallback ke{" "}
+          <code className="text-stone-600">/audio/beautiful-in-white.mp3</code> atau{" "}
+          <code className="text-stone-600">/audio/akad.mp3</code>.
+        </p>
+        <Field label="URL file musik" error={state.errors?.songUrl}>
+          <input
+            type="url"
+            name="songUrl"
+            placeholder="https://…"
+            className={inputCls}
+          />
+        </Field>
       </section>
 
       {/* ─ Submit ──────────────────────────────────────────────────────── */}

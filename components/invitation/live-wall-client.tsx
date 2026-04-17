@@ -58,18 +58,18 @@ function GoldDivider() {
 function ParticleField() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {Array.from({ length: 20 }).map((_, i) => (
+      {Array.from({ length: 16 }).map((_, i) => (
         <motion.div
           key={i}
-          className="absolute h-px w-px rounded-full bg-gold-shine"
+          className="absolute h-1 w-1 rounded-full bg-muted-gold/35"
           style={{
             left: `${(i * 37 + 11) % 100}%`,
             top: `${(i * 53 + 7) % 100}%`,
           }}
           animate={{
-            opacity: [0, 0.8, 0],
-            scale: [0, 1.5, 0],
-            y: [-20, -60],
+            opacity: [0, 0.55, 0],
+            scale: [0, 1.2, 0],
+            y: [-12, -40],
           }}
           transition={{
             duration: 4 + (i % 3),
@@ -95,14 +95,14 @@ function MessageCard({ msg, index }: { msg: Message; index: number }) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.25 } }}
       transition={{ duration: 0.5, delay: index * 0.04, ease: "easeOut" }}
-      className="group relative overflow-hidden rounded-2xl border border-muted-gold/15 bg-white/[0.04] p-5 backdrop-blur-sm"
+      className="group relative overflow-hidden rounded-2xl border border-muted-gold/25 bg-[#fdfbf7]/95 p-5 shadow-[0_8px_30px_-12px_rgba(90,74,58,0.12)] backdrop-blur-sm"
     >
       {/* Shimmer border on hover */}
-      <div className="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-br from-gold-shine/8 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      <div className="pointer-events-none absolute inset-0 rounded-2xl bg-linear-to-br from-muted-gold/[0.14] via-transparent to-sage-green/[0.08] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <p className="truncate font-serif text-lg font-medium text-primary-cream">
+          <p className="truncate font-serif text-lg font-medium text-wood-brown">
             {msg.guestName}
           </p>
           <div className="mt-1.5 flex flex-wrap items-center gap-2">
@@ -119,13 +119,13 @@ function MessageCard({ msg, index }: { msg: Message; index: number }) {
             )}
           </div>
         </div>
-        <span className="shrink-0 font-sans text-[10px] text-wood-brown/85">
+        <span className="shrink-0 font-sans text-[10px] text-wood-brown/45">
           {formatRelativeTime(msg.createdAt)}
         </span>
       </div>
 
       {msg.message && (
-        <p className="mt-3 border-t border-muted-gold/10 pt-3 font-sans text-sm leading-relaxed text-muted-gold/90 italic">
+        <p className="mt-3 border-t border-muted-gold/20 pt-3 font-sans text-sm leading-relaxed text-wood-brown/82 italic">
           &ldquo;{msg.message}&rdquo;
         </p>
       )}
@@ -187,11 +187,10 @@ export function LiveWallClient({
   });
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-surface-night">
+    <div className="relative min-h-screen overflow-hidden bg-linear-to-b from-[#fdfbf7] via-[#f7f2ea] to-[#eef6f1]">
       <ParticleField />
 
-      {/* Radial glow behind header */}
-      <div className="bg-radial-gold-header pointer-events-none absolute inset-x-0 top-0 h-[50vh]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[48vh] bg-radial-[ellipse_at_50%_0%] from-muted-gold/12 via-sage-green/[0.06] to-transparent" />
 
       {/* ── Header ── */}
       <header className="relative z-10 flex flex-col items-center px-6 pb-8 pt-10 text-center">
@@ -201,21 +200,21 @@ export function LiveWallClient({
           transition={{ duration: 0.8 }}
           className="flex flex-col items-center gap-3"
         >
-          <p className="font-sans text-[10px] uppercase tracking-[0.45em] text-muted-gold/70">
+          <p className="font-sans text-[10px] uppercase tracking-[0.45em] text-wood-brown/55">
             ✦ Live Greeting Wall ✦
           </p>
 
-          <h1 className="text-gradient-gold-live font-serif text-5xl font-medium sm:text-7xl lg:text-8xl">
+          <h1 className="font-serif text-5xl font-medium text-wood-brown/95 sm:text-7xl lg:text-8xl">
             {groomName}
-            <span className="mx-3 font-serif text-4xl text-muted-gold/60 sm:text-6xl lg:text-7xl">
+            <span className="mx-3 font-serif text-4xl text-muted-gold sm:text-6xl lg:text-7xl">
               &
             </span>
             {brideName}
           </h1>
 
           <div className="mt-1 flex flex-col items-center gap-1">
-            <p className="font-sans text-sm text-wood-brown/75">{formattedDate}</p>
-            <p className="font-sans text-xs text-wood-brown/85">{venueName}</p>
+            <p className="font-sans text-sm text-wood-brown/72">{formattedDate}</p>
+            <p className="font-sans text-xs text-wood-brown/58">{venueName}</p>
           </div>
 
           <GoldDivider />
@@ -228,10 +227,10 @@ export function LiveWallClient({
               initial={{ opacity: 0, scale: 0.8, y: 8 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.8, y: -8 }}
-              className="mt-3 inline-flex items-center gap-2 rounded-full border border-gold-shine/30 bg-gold-shine/10 px-4 py-1.5"
+              className="mt-3 inline-flex items-center gap-2 rounded-full border border-muted-gold/35 bg-primary-cream/95 px-4 py-1.5 shadow-sm"
             >
-              <Sparkles size={12} className="text-gold-shine" />
-              <span className="font-sans text-xs text-gold-shine">
+              <Sparkles size={12} className="text-muted-gold" />
+              <span className="font-sans text-xs text-wood-brown">
                 {newCount} ucapan baru masuk!
               </span>
             </motion.div>
@@ -243,8 +242,8 @@ export function LiveWallClient({
       <main className="relative z-10 mx-auto max-w-6xl px-4 pb-12">
         {messages.length === 0 ? (
           <div className="flex flex-col items-center gap-3 py-20 text-center">
-            <Heart size={32} className="text-muted-gold/30" />
-            <p className="font-sans text-sm text-wood-brown/90">
+            <Heart size={32} className="text-muted-gold/45" />
+            <p className="font-sans text-sm text-wood-brown/75">
               Belum ada ucapan yang masuk. Undang tamu untuk mengisi RSVP!
             </p>
           </div>
@@ -265,10 +264,10 @@ export function LiveWallClient({
       </main>
 
       {/* ── Footer ticker ── */}
-      <footer className="fixed bottom-0 inset-x-0 z-20 flex items-center justify-between border-t border-muted-gold/10 bg-surface-night/80 px-6 py-2 backdrop-blur-md">
+      <footer className="fixed bottom-0 inset-x-0 z-20 flex items-center justify-between border-t border-muted-gold/25 bg-[#f8f6f1]/92 px-6 py-2.5 backdrop-blur-md">
         <div className="flex items-center gap-2">
-          <CheckCircle2 size={10} className="text-emerald-500" />
-          <span className="font-sans text-[10px] text-wood-brown/90">
+          <CheckCircle2 size={10} className="text-emerald-600" />
+          <span className="font-sans text-[10px] text-wood-brown/58">
             Live · diperbarui{" "}
             {lastUpdated.toLocaleTimeString("id-ID", {
               hour: "2-digit",
@@ -277,7 +276,7 @@ export function LiveWallClient({
             })}
           </span>
         </div>
-        <p className="font-sans text-[10px] text-wood-brown/60">
+        <p className="font-sans text-[10px] text-wood-brown/45">
           Sentuh Undang · Tier Sultan
         </p>
       </footer>

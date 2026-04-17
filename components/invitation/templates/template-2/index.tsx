@@ -8,6 +8,7 @@ import { RsvpForm } from "@/components/invitation/rsvp-form";
 import { Timeline } from "@/components/invitation/timeline";
 import { GuestBook } from "@/components/invitation/guest-book";
 import { QrisSection } from "@/components/invitation/qris-section";
+import { WeddingGiftSection } from "@/components/invitation/wedding-gift-section";
 import { VideoHero } from "@/components/invitation/video-hero";
 import {
   BatikCornerGroup,
@@ -348,14 +349,18 @@ export default function Template2({
       <WavyBatikEdge />
 
       {/* ── AMPLOP DIGITAL / QRIS ─────────────────────────────────────────── */}
-      {qrisData && (
-        <QrisSection
-          qrisUrl={qrisData.qrisUrl}
-          bankName={qrisData.bankName}
-          bankAccountNumber={qrisData.bankAccountNumber}
-          bankAccountName={qrisData.bankAccountName}
-          instagramFilterUrl={qrisData.instagramFilterUrl}
-        />
+      {isTier4 && qrisData && (
+        <>
+          <WeddingGiftSection
+            bankName={qrisData.bankName}
+            bankAccountNumber={qrisData.bankAccountNumber}
+            bankAccountName={qrisData.bankAccountName}
+          />
+          <QrisSection
+            qrisUrl={qrisData.qrisUrl}
+            instagramFilterUrl={qrisData.instagramFilterUrl}
+          />
+        </>
       )}
 
       {/* ── LIVE WALL (Tier 4) ───────────────────────────────────────────── */}

@@ -9,6 +9,17 @@ import Template4 from "@/components/invitation/templates/template-4";
 import Template5 from "@/components/invitation/templates/template-5";
 import Template6 from "@/components/invitation/templates/template-6";
 import type { InvitationTemplateProps } from "@/components/invitation/templates/types";
+import {
+  DEFAULT_QRIS_PLACEHOLDER_PATH,
+  DEMO_SULTAN_GIFT_BY_SLUG,
+} from "@/lib/demo-invitation-fallbacks";
+import {
+  pickDefaultMusicUrl,
+  resolveBackgroundMusicUrl,
+} from "@/lib/resolve-music-url";
+
+/** Undangan dinamis per slug — hindari cache RSC memakai URL musik lama. */
+export const dynamic = "force-dynamic";
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -135,9 +146,23 @@ export default async function InvitationPage({
   const heroAsset = inv.assets.find((a) => a.kind === "HERO_IMAGE");
   const heroUrl = heroAsset?.url ?? null;
 
-  const musicUrl = isTier2Plus
-    ? (inv.assets.find((a) => a.kind === "BACKGROUND_MUSIC")?.url ?? undefined)
-    : undefined;
+  const assetMusicUrls = inv.assets
+    .filter((a) => a.kind === "BACKGROUND_MUSIC")
+    .sort((a, b) => a.sortOrder - b.sortOrder)
+    .map((a) => a.url);
+
+  let musicUrl = resolveBackgroundMusicUrl({
+    isTier2Plus,
+    invitationId: inv.id,
+    songUrl: inv.songUrl,
+    assetMusicUrls,
+  });
+
+  // Slug demo marketing (demo-sultan, demo-geulis, …): paksa mp3 dari /public/audio/
+  // agar tidak pernah memutar Pixabay / CDN lama yang tertinggal di DB.
+  if (isTier2Plus && inv.slug.startsWith("demo-")) {
+    musicUrl = pickDefaultMusicUrl(inv.id);
+  }
 
   const galleryImages = isTier2Plus
     ? inv.assets
@@ -171,12 +196,20 @@ export default async function InvitationPage({
   const videoUrl = isTier4 ? (inv.videoUrl ?? null) : null;
   const coupleName = `${inv.groomName} & ${inv.brideName}`;
 
+  const demoGift = DEMO_SULTAN_GIFT_BY_SLUG[inv.slug];
+
+  const qrisFromDb = inv.qrisUrl?.trim() || null;
+
   const qrisData = isTier4
     ? {
-        qrisUrl: inv.qrisUrl ?? null,
-        bankName: inv.bankName ?? null,
-        bankAccountNumber: inv.bankAccountNumber ?? null,
-        bankAccountName: inv.bankAccountName ?? null,
+        qrisUrl:
+          qrisFromDb ??
+          demoGift?.qrisUrl ??
+          DEFAULT_QRIS_PLACEHOLDER_PATH,
+        bankName: inv.bankName ?? demoGift?.bankName ?? null,
+        bankAccountNumber:
+          inv.bankAccountNumber ?? demoGift?.bankAccountNumber ?? null,
+        bankAccountName: inv.bankAccountName ?? demoGift?.bankAccountName ?? null,
         instagramFilterUrl: inv.instagramFilterUrl ?? null,
       }
     : null;
@@ -246,6 +279,7 @@ export default async function InvitationPage({
         guestName,
         eventDateLabel,
       }}
+      invitationId={inv.id}
       musicUrl={musicUrl}
     >
       {renderTemplate()}

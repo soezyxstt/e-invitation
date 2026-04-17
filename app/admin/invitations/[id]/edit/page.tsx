@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { TimelineManager } from "@/components/admin/timeline-manager";
 import { SultanFieldsForm } from "@/components/admin/sultan-fields-form";
 import { TemplateSwitcher } from "@/components/admin/template-switcher";
+import { SongUrlForm } from "@/components/admin/song-url-form";
 import { toggleInvitationStatus } from "@/app/actions/invitation";
 import { ScrollText, Heart, Eye, EyeOff, Crown, Tv2, ScanLine, LayoutTemplate } from "lucide-react";
 import Link from "next/link";
@@ -31,6 +32,7 @@ export default async function EditInvitationPage({
 
   if (!inv) notFound();
 
+  const isTier2Plus = inv.tierId >= 2;
   const isTier3Plus = inv.tierId >= 3;
   const isTier4 = inv.tierId >= 4;
   const currentTemplateId = inv.templateId ?? 1;
@@ -161,6 +163,33 @@ export default async function EditInvitationPage({
         </div>
         <TemplateSwitcher invitationId={inv.id} currentTemplateId={currentTemplateId} />
       </section>
+
+      {/* ── Musik latar URL (Tier 2+) ───────────────────────────────────── */}
+      {isTier2Plus ? (
+        <section className="mt-10">
+          <div className="mb-5 flex items-center gap-2.5 border-b border-stone-200 pb-3">
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-sage-green/15">
+              <span className="text-xs font-semibold text-sage-green">♪</span>
+            </div>
+            <div>
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-stone-600">
+                Musik latar
+              </h2>
+              <p className="mt-0.5 text-xs text-stone-400">
+                URL file audio (misalnya hasil unggah Uploadthing).
+              </p>
+            </div>
+          </div>
+          <SongUrlForm invitationId={inv.id} defaultSongUrl={inv.songUrl} />
+        </section>
+      ) : (
+        <section className="mt-10 rounded-2xl border border-dashed border-stone-200 bg-primary-cream p-6 text-center">
+          <p className="text-sm font-medium text-stone-600">
+            Musik latar tersedia mulai Paket{" "}
+            <strong className="text-sage-green">Geulis (Tier 2)</strong>.
+          </p>
+        </section>
+      )}
 
       {/* ── Timeline section (Tier 3+) ─────────────────────────────────── */}
       {isTier3Plus ? (

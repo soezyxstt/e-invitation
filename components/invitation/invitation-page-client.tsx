@@ -18,12 +18,15 @@ interface InvitationPageClientProps {
   };
   /** Tier 2+ — URL audio dari Uploadthing. */
   musicUrl?: string;
+  /** Untuk sanitasi Pixabay di klien. */
+  invitationId: string;
   children: React.ReactNode;
 }
 
 function InvitationPageInner({
   coverProps,
   musicUrl,
+  invitationId,
   children,
 }: InvitationPageClientProps) {
   const [opened, setOpened] = useState(false);
@@ -51,7 +54,13 @@ function InvitationPageInner({
       </AnimatePresence>
 
       {/* Floating controls — visible after cover exits */}
-      {musicUrl && <MusicPlayer src={musicUrl} autoPlay={opened} />}
+      {musicUrl && (
+        <MusicPlayer
+          src={musicUrl}
+          invitationId={invitationId}
+          autoPlay={opened}
+        />
+      )}
       <LiteModeToggle />
       <SharingQR />
     </>

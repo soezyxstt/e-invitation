@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+  <rect width="400" height="400" rx="16" fill="#F7F4ED"/>
+  <rect x="24" y="24" width="120" height="120" rx="8" fill="#E8E0D4" stroke="#C4A574" stroke-width="2"/>
+  <rect x="256" y="24" width="120" height="120" rx="8" fill="#E8E0D4" stroke="#C4A574" stroke-width="2"/>
+  <rect x="24" y="256" width="120" height="120" rx="8" fill="#E8E0D4" stroke="#C4A574" stroke-width="2"/>
+  <rect x="52" y="52" width="64" height="64" rx="4" fill="#5C5346" opacity="0.35"/>
+  <rect x="284" y="52" width="64" height="64" rx="4" fill="#5C5346" opacity="0.35"/>
+  <rect x="52" y="284" width="64" height="64" rx="4" fill="#5C5346" opacity="0.35"/>
+  <!-- grid mimicking QR modules -->
+  <g fill="#8B7355" opacity="0.45">
+    <rect x="168" y="168" width="16" height="16" rx="2"/>
+    <rect x="192" y="168" width="16" height="16" rx="2"/>
+    <rect x="216" y="168" width="16" height="16" rx="2"/>
+    <rect x="168" y="192" width="16" height="16" rx="2"/>
+    <rect x="216" y="192" width="16" height="16" rx="2"/>
+    <rect x="168" y="216" width="16" height="16" rx="2"/>
+    <rect x="192" y="216" width="16" height="16" rx="2"/>
+    <rect x="216" y="216" width="16" height="16" rx="2"/>
+    <rect x="248" y="168" width="16" height="16" rx="2"/>
+    <rect x="272" y="192" width="16" height="16" rx="2"/>
+    <rect x="168" y="248" width="16" height="16" rx="2"/>
+    <rect x="200" y="248" width="16" height="16" rx="2"/>
+    <rect x="232" y="248" width="16" height="16" rx="2"/>
+    <rect x="264" y="248" width="16" height="16" rx="2"/>
+    <rect x="296" y="264" width="16" height="16" rx="2"/>
+    <rect x="168" y="280" width="16" height="16" rx="2"/>
+    <rect x="200" y="296" width="16" height="16" rx="2"/>
+    <rect x="248" y="296" width="16" height="16" rx="2"/>
+  </g>
+</svg>

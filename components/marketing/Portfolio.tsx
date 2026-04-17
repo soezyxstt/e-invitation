@@ -17,6 +17,7 @@ import {
   Sun,
   Droplets,
   ChevronDown,
+  Gift,
 } from "lucide-react";
 import { FadeInSection } from "./FadeInSection";
 
@@ -462,6 +463,16 @@ function PreviewCard({ item }: { item: PreviewItem }) {
           <span>Lihat Preview</span>
           <span className="h-px w-4 bg-current transition-all duration-300 group-hover:w-6" />
         </div>
+
+        {item.tier === "sultan" && (
+          <p
+            className={`mt-3 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wide ${subTextColor}`}
+            style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
+          >
+            <Gift size={11} className="shrink-0 opacity-80" aria-hidden />
+            <span>Wedding gift · Rekening dan QRIS (Tier Sultan)</span>
+          </p>
+        )}
       </div>
     </Link>
   );

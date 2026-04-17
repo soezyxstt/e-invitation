@@ -102,6 +102,9 @@ model Invitation {
   /// Kunci atau cuplikan template Basa Sunda lemes (UI memetakan ke template).
   basaSundaLemesKey String?
 
+  /// URL musik latar custom (Uploadthing). Jika kosong: aset BACKGROUND_MUSIC (jika ada), lalu fallback deterministik ke `/audio/beautiful-in-white.mp3` atau `/audio/akad.mp3`.
+  songUrl String?
+
   // --- Tier 4 (Sultan) ---
   /// URL video latar (Uploadthing CDN). Tampil di Hero Section jika tierId === 4.
   videoUrl            String?

@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Music2, Pause } from "lucide-react";
 import { useLiteMode } from "@/lib/lite-mode-context";
+import { sanitizeMusicUrlForPlayback } from "@/lib/resolve-music-url";
 
 interface MusicPlayerProps {
   /** URL from Uploadthing — any browser-playable audio format (mp3, ogg, aac). */
   src: string;
+  invitationId: string;
   /**
    * Set to true once the user clicks "Buka Undangan".
    * Browser policies require audio to start inside a user-gesture context;
@@ -16,7 +18,16 @@ interface MusicPlayerProps {
   autoPlay: boolean;
 }
 
-export function MusicPlayer({ src, autoPlay }: MusicPlayerProps) {
+export function MusicPlayer({
+  src,
+  invitationId,
+  autoPlay,
+}: MusicPlayerProps) {
+  const safeSrc = useMemo(
+    () => sanitizeMusicUrlForPlayback(src, invitationId) ?? src,
+    [src, invitationId],
+  );
+
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
   const [ready, setReady] = useState(false);
@@ -29,7 +40,7 @@ export function MusicPlayer({ src, autoPlay }: MusicPlayerProps) {
       .play()
       .then(() => setPlaying(true))
       .catch(() => {});
-  }, [autoPlay]);
+  }, [autoPlay, safeSrc]);
 
   // Pause automatically when Lite Mode is enabled
   useEffect(() => {
@@ -55,8 +66,9 @@ export function MusicPlayer({ src, autoPlay }: MusicPlayerProps) {
       {/* Preload audio — starts loading only after cover is dismissed */}
       {autoPlay && (
         <audio
+          key={safeSrc}
           ref={audioRef}
-          src={src}
+          src={safeSrc}
           loop
           preload="auto"
           onCanPlayThrough={() => setReady(true)}

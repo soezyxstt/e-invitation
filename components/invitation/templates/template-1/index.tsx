@@ -6,6 +6,7 @@ import { RsvpForm } from "@/components/invitation/rsvp-form";
 import { Timeline } from "@/components/invitation/timeline";
 import { GuestBook } from "@/components/invitation/guest-book";
 import { QrisSection } from "@/components/invitation/qris-section";
+import { WeddingGiftSection } from "@/components/invitation/wedding-gift-section";
 import { VideoHero } from "@/components/invitation/video-hero";
 import { MapsEmbed } from "@/components/invitation/maps-embed";
 import {
@@ -403,13 +404,15 @@ export default function Template1({
       <BatikBorder />
 
       {/* ── AMPLOP DIGITAL / QRIS ─────────────────────────────────────────── */}
-      {qrisData && (
+      {isTier4 && qrisData && (
         <FadeIn>
-          <QrisSection
-            qrisUrl={qrisData.qrisUrl}
+          <WeddingGiftSection
             bankName={qrisData.bankName}
             bankAccountNumber={qrisData.bankAccountNumber}
             bankAccountName={qrisData.bankAccountName}
+          />
+          <QrisSection
+            qrisUrl={qrisData.qrisUrl}
             instagramFilterUrl={qrisData.instagramFilterUrl}
           />
         </FadeIn>

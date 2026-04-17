@@ -15,79 +15,72 @@ interface TimelineProps {
   events: TimelineEventItem[];
 }
 
-function TimelineCard({
+/** Editorial zigzag + bento grid — no card chrome (no rounded boxes / panel cards). */
+function StoryBlock({
   event,
   index,
+  total,
+  className,
 }: {
   event: TimelineEventItem;
   index: number;
+  total: number;
+  className?: string;
 }) {
   const { isLiteMode } = useLiteMode();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-12% 0px" });
 
-  const isLeft = index % 2 === 0;
+  const isWide = total === 1 || index % 5 === 0;
 
   const animProps = isLiteMode
     ? {}
     : {
-        initial: { opacity: 0, x: isLeft ? -40 : 40 },
-        animate: isInView ? { opacity: 1, x: 0 } : {},
-        transition: { duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+        initial: { opacity: 0, y: 36 },
+        animate: isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 36 },
+        transition: {
+          duration: 0.65,
+          delay: index * 0.07,
+          ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+        },
       };
 
   return (
-    <div
+    <motion.div
       ref={ref}
-      className={`relative flex w-full items-start gap-0 ${
-        isLeft ? "flex-row" : "flex-row-reverse"
-      }`}
+      {...animProps}
+      className={[
+        "group relative min-h-0",
+        isWide ? "md:col-span-2" : "",
+        className ?? "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      style={{ willChange: isLiteMode ? undefined : "transform, opacity" }}
     >
-      {/* Card */}
-      <motion.div
-        {...animProps}
-        className={`w-[calc(50%-28px)] ${isLeft ? "text-right pr-5" : "text-left pl-5"} sm:w-[calc(50%-28px)]`}
-      >
-        <div
-          className={`inline-block rounded-2xl border border-muted-gold/50 bg-primary-cream p-4 shadow-sm ${
-            isLeft ? "text-right" : "text-left"
-          }`}
-        >
-          {/* Date chip */}
-          <span className="inline-block rounded-full bg-wood-brown px-3 py-0.5 font-sans text-[9px] uppercase tracking-[0.25em] text-primary-cream">
-            {event.date}
-          </span>
-          <h3 className="mt-2 font-serif text-base text-wood-brown">
-            {event.title}
-          </h3>
-          {event.description && (
-            <p className="mt-1.5 font-sans text-xs leading-relaxed text-wood-brown/85">
-              {event.description}
-            </p>
-          )}
-        </div>
-      </motion.div>
+      {/* Soft wash — not a card: no border radius box, no drop shadow */}
+      <div
+        className="pointer-events-none absolute -inset-x-1 -inset-y-2 bg-linear-to-br from-muted-gold/9 via-transparent to-sage-green/6 opacity-80 blur-2xl md:opacity-100"
+        aria-hidden
+      />
 
-      {/* Centre dot + connector */}
-      <div className="relative z-10 flex w-14 shrink-0 flex-col items-center">
-        <motion.div
-          ref={undefined}
-          {...(isLiteMode
-            ? {}
-            : {
-                initial: { scale: 0 },
-                animate: isInView ? { scale: 1 } : {},
-                transition: { duration: 0.4, delay: 0.2, type: "spring" },
-              })}
-          className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-muted-gold bg-primary-cream shadow-md"
+      <div className="relative flex h-full flex-col border-l-2 border-muted-gold/45 pl-5 pr-1 pt-0.5 md:pl-6">
+        <span
+          className="font-mono text-[10px] uppercase tracking-[0.32em] text-muted-gold/90"
+          style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
         >
-          <span className="h-2.5 w-2.5 rounded-full bg-muted-gold" />
-        </motion.div>
+          {event.date}
+        </span>
+        <h3 className="mt-2 font-serif text-xl leading-snug text-wood-brown sm:text-2xl">
+          {event.title}
+        </h3>
+        {event.description && (
+          <p className="mt-3 max-w-prose font-sans text-sm leading-relaxed text-wood-brown/78">
+            {event.description}
+          </p>
+        )}
       </div>
-
-      {/* Spacer (opposite side) */}
-      <div className="w-[calc(50%-28px)]" />
-    </div>
+    </motion.div>
   );
 }
 
@@ -95,23 +88,36 @@ export function Timeline({ events }: TimelineProps) {
   if (events.length === 0) return null;
 
   return (
-    <div className="relative mx-auto max-w-2xl">
-      {/* Vertical gold line */}
-      <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-linear-to-b from-transparent via-muted-gold/50 to-transparent" />
+    <div className="relative mx-auto max-w-3xl">
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 rounded-4xl bg-linear-to-br from-muted-gold/6 via-transparent to-sage-green/5"
+        aria-hidden
+      />
 
-      <div className="flex flex-col gap-8">
+      <div className="grid grid-cols-1 gap-10 sm:gap-12 md:grid-cols-2 md:gap-x-14 md:gap-y-12">
         {events.map((event, i) => (
-          <TimelineCard key={event.id} event={event} index={i} />
+          <StoryBlock
+            key={event.id}
+            event={event}
+            index={i}
+            total={events.length}
+            className={i % 2 === 1 ? "md:mt-14" : ""}
+          />
         ))}
       </div>
 
-      {/* Trailing heart at the bottom */}
-      <div className="mt-8 flex justify-center">
-        <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-muted-gold/60 bg-primary-cream shadow-sm">
-          <svg viewBox="0 0 24 24" className="h-5 w-5 text-muted-gold" fill="currentColor">
+      <div className="mt-14 flex justify-center">
+        <motion.span
+          initial={false}
+          animate={{ scale: [1, 1.06, 1] }}
+          transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+          className="inline-flex h-10 w-10 items-center justify-center text-muted-gold/80"
+          aria-hidden
+        >
+          <svg viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor">
             <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z" />
           </svg>
-        </span>
+        </motion.span>
       </div>
     </div>
   );

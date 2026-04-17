@@ -9,6 +9,7 @@ import { RsvpForm } from "@/components/invitation/rsvp-form";
 import { Timeline } from "@/components/invitation/timeline";
 import { GuestBook } from "@/components/invitation/guest-book";
 import { QrisSection } from "@/components/invitation/qris-section";
+import { WeddingGiftSection } from "@/components/invitation/wedding-gift-section";
 import { VideoHero } from "@/components/invitation/video-hero";
 import { MapsEmbed } from "@/components/invitation/maps-embed";
 import { groomFallback, brideFallback } from "@/lib/portrait-fallback";
@@ -452,13 +453,15 @@ export default function Template6({
       )}
 
       {/* ── QRIS / Bank (Sultan) ─────────────────────────────────────────── */}
-      {qrisData && (
+      {isTier4 && qrisData && (
         <Appear>
-          <QrisSection
-            qrisUrl={qrisData.qrisUrl}
+          <WeddingGiftSection
             bankName={qrisData.bankName}
             bankAccountNumber={qrisData.bankAccountNumber}
             bankAccountName={qrisData.bankAccountName}
+          />
+          <QrisSection
+            qrisUrl={qrisData.qrisUrl}
             instagramFilterUrl={qrisData.instagramFilterUrl}
           />
         </Appear>

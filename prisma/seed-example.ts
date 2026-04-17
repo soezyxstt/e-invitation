@@ -56,22 +56,9 @@ const GALLERY: { id: string; alt: string }[] = [
   { id: "photo-1510279775229-4b08b20eb428", alt: "Potret kedua mempelai" },
 ];
 
-/**
- * Musik latar instrumental bebas royalti (demo).
- *
- * Untuk produksi, upload lagu ke Uploadthing dan ganti URL di bawah.
- * Rekomendasi lagu pernikahan populer untuk demo:
- *   - "Beautiful in White" – Westlife
- *   - "Akad" – Payung Teduh
- *   - "Nikah" – Juicy Luicy
- *   - "A Thousand Years" – Christina Perri
- *   - "Marry Me" – Train
- *
- * Catatan: lagu di atas berhak cipta. Upload ke Uploadthing hanya
- * untuk penggunaan pribadi / demo internal, bukan distribusi publik.
- */
-const DEMO_MUSIC_URL =
-  "https://cdn.pixabay.com/audio/2024/11/28/audio_1e75a41093.mp3";
+// Musik demo: tanpa `songUrl` & tanpa aset BACKGROUND_MUSIC, undangan memakai
+// fallback deterministik ke `/audio/beautiful-in-white.mp3` atau `/audio/akad.mp3`
+// (lihat `lib/resolve-music-url.ts`). Custom: isi kolom `songUrl` atau unggah ke Uploadthing.
 
 // ── Seed data undangan ───────────────────────────────────────────────────────
 
@@ -113,6 +100,12 @@ interface InvitationSeed {
     message?: string;
     partySize: number;
   }[];
+  /** Tier 4 — wedding gift & fitur Sultan */
+  bankName?: string;
+  bankAccountNumber?: string;
+  bankAccountName?: string;
+  qrisUrl?: string;
+  videoUrl?: string;
 }
 
 const INVITATIONS: InvitationSeed[] = [
@@ -458,6 +451,10 @@ const INVITATIONS: InvitationSeed[] = [
       { guestName: "Dr. Ir. H. Ruki Handana", attendance: "MAYBE", message: "Insya Allah hadir jika tidak ada sidang kabinet.", partySize: 2 },
       { guestName: "Bpk. H. Sutanto Wahab", attendance: "DECLINED", message: "Mohon maaf, sedang tugas luar negeri.", partySize: 1 },
     ],
+    bankName: "Bank Central Asia (BCA)",
+    bankAccountNumber: "1234567890",
+    bankAccountName: "Gunawan Fauzi Nugraha",
+    qrisUrl: "/images/qris-placeholder.svg",
   },
 
   // ─── Tier 4 — Sultan #3 ──────────────────────────────────────────────────
@@ -501,6 +498,10 @@ const INVITATIONS: InvitationSeed[] = [
       { guestName: "H. Wishnutama Kusubandio", attendance: "MAYBE", message: "Insya Allah hadir, akan konfirmasi seminggu sebelumnya.", partySize: 2 },
       { guestName: "Bpk. H. Sandiaga Uno", attendance: "DECLINED", message: "Mohon maaf tidak bisa hadir karena tugas kenegaraan.", partySize: 1 },
     ],
+    bankName: "Bank Negara Indonesia (BNI)",
+    bankAccountNumber: "0123456789012",
+    bankAccountName: "Rizky Pratama Wijaya",
+    qrisUrl: "/images/qris-placeholder.svg",
   },
 
   // ─── Tier 4 — Sultan ─────────────────────────────────────────────────────
@@ -549,6 +550,10 @@ const INVITATIONS: InvitationSeed[] = [
       { guestName: "Kang Dedi Mulyadi", attendance: "DECLINED", message: "Mohon maaf tidak bisa hadir, ada sidang paripurna yang tidak bisa diwakilkan.", partySize: 1 },
       { guestName: "Bpk. Fauzi Bowo", attendance: "DECLINED", partySize: 1 },
     ],
+    bankName: "Bank Mandiri",
+    bankAccountNumber: "0080012345678",
+    bankAccountName: "Dimas Pratama Nugraha",
+    qrisUrl: "/images/qris-placeholder.svg",
   },
 ];
 
@@ -620,6 +625,16 @@ async function main() {
 
         openingReligiousText: data.openingReligiousText,
         basaSundaLemesKey: data.basaSundaLemesKey,
+
+        ...(data.tierId >= 4
+          ? {
+              bankName: data.bankName ?? null,
+              bankAccountNumber: data.bankAccountNumber ?? null,
+              bankAccountName: data.bankAccountName ?? null,
+              qrisUrl: data.qrisUrl ?? null,
+              videoUrl: data.videoUrl ?? null,
+            }
+          : {}),
       },
     });
 
@@ -675,18 +690,8 @@ async function main() {
       });
     }
 
-    // ── Background music (Tier 2+) ──────────────────────────────────────
-    if (data.hasMusic) {
-      await prisma.invitationAsset.create({
-        data: {
-          invitationId: inv.id,
-          kind: "BACKGROUND_MUSIC",
-          url: DEMO_MUSIC_URL,
-          altText: "Musik latar romantis",
-          sortOrder: 0,
-        },
-      });
-    }
+    // Musik Tier 2+: tanpa aset BACKGROUND_MUSIC & tanpa songUrl → fallback
+    // `/audio/beautiful-in-white.mp3` atau `/audio/akad.mp3` di app.
 
     // ── Timeline events (Tier 3+) ────────────────────────────────────────
     if (data.timeline && data.timeline.length > 0) {
@@ -719,7 +724,7 @@ async function main() {
     const assetSummary = [
       "1 hero",
       data.galleryCount > 0 ? `${data.galleryCount} galeri` : null,
-      data.hasMusic ? "musik" : null,
+      data.hasMusic ? "musik (fallback lokal)" : null,
     ]
       .filter(Boolean)
       .join(", ");

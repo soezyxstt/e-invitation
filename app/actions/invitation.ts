@@ -15,7 +15,7 @@ const createInvitationSchema = z.object({
     .min(3, "Slug minimal 3 karakter")
     .regex(slugRegex, "Slug hanya boleh huruf kecil, angka, dan tanda hubung"),
   tierId: z.coerce.number().int().min(1).max(4),
-  templateId: z.coerce.number().int().min(1).max(3).default(1),
+  templateId: z.coerce.number().int().min(1).max(6).default(1),
   groomName: z.string().min(2, "Nama mempelai pria wajib diisi"),
   brideName: z.string().min(2, "Nama mempelai wanita wajib diisi"),
   groomParentsLine: z.string().optional(),
@@ -30,6 +30,7 @@ const createInvitationSchema = z.object({
   basaSundaLemesKey: z.string().optional(),
   openingReligiousText: z.string().optional(),
   heroImageUrl: z.string().url("URL hero image tidak valid").optional().or(z.literal("")),
+  songUrl: z.string().url("URL musik tidak valid").optional().or(z.literal("")),
 });
 
 export type CreateInvitationState = {
@@ -73,6 +74,7 @@ export async function createInvitation(
     basaSundaLemesKey,
     openingReligiousText,
     heroImageUrl,
+    songUrl,
   } = parsed.data;
 
   const existing = await prisma.invitation.findUnique({ where: { slug } });
@@ -103,6 +105,7 @@ export async function createInvitation(
       mapUrl: mapUrl || null,
       basaSundaLemesKey: basaSundaLemesKey || null,
       openingReligiousText: openingReligiousText || null,
+      songUrl: songUrl || null,
     },
   });
 
@@ -144,7 +147,7 @@ export async function updateInvitation(
     title, tierId, templateId, groomName, brideName,
     groomParentsLine, brideParentsLine, groomChildOrder, brideChildOrder,
     eventDate, eventTime, venueName, venueAddress, mapUrl,
-    basaSundaLemesKey, openingReligiousText, heroImageUrl,
+    basaSundaLemesKey, openingReligiousText, heroImageUrl, songUrl,
   } = parsed.data;
 
   const dateTimeStr = eventTime ? `${eventDate}T${eventTime}:00` : `${eventDate}T00:00:00`;
@@ -163,6 +166,7 @@ export async function updateInvitation(
       mapUrl: mapUrl || null,
       basaSundaLemesKey: basaSundaLemesKey || null,
       openingReligiousText: openingReligiousText || null,
+      songUrl: songUrl || null,
     },
   });
 
@@ -261,6 +265,49 @@ export async function updateSultanFields(
   return { success: true };
 }
 
+// ── Musik latar (Tier 2+) — URL dari Uploadthing atau CDN ────────────────────
+
+const songUrlSchema = z.object({
+  songUrl: z.string().url("URL musik tidak valid").optional().or(z.literal("")),
+});
+
+export type SongUrlState = {
+  success?: boolean;
+  message?: string;
+  errors?: Partial<Record<"songUrl", string[]>>;
+};
+
+export async function updateInvitationSongUrl(
+  invitationId: string,
+  _prev: SongUrlState,
+  formData: FormData,
+): Promise<SongUrlState> {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) return { message: "Sesi login tidak ditemukan." };
+
+  const inv = await prisma.invitation.findUnique({
+    where: { id: invitationId },
+    select: { ownerId: true, tierId: true },
+  });
+  if (!inv || inv.ownerId !== session.user.id) return { message: "Akses ditolak." };
+  if (inv.tierId < 2) {
+    return { message: "Musik latar tersedia mulai Paket Geulis (Tier 2)." };
+  }
+
+  const raw = Object.fromEntries(formData.entries());
+  const parsed = songUrlSchema.safeParse(raw);
+  if (!parsed.success) {
+    return { errors: parsed.error.flatten().fieldErrors as SongUrlState["errors"] };
+  }
+
+  await prisma.invitation.update({
+    where: { id: invitationId },
+    data: { songUrl: parsed.data.songUrl || null },
+  });
+
+  return { success: true };
+}
+
 // ── Template switcher (standalone) ───────────────────────────────────────────
 
 export async function updateInvitationTemplate(
@@ -270,7 +317,7 @@ export async function updateInvitationTemplate(
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) throw new Error("Unauthorized");
 
-  const valid = [1, 2, 3].includes(templateId);
+  const valid = [1, 2, 3, 4, 5, 6].includes(templateId);
   if (!valid) throw new Error("templateId tidak valid");
 
   await prisma.invitation.updateMany({
