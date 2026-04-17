@@ -45,3 +45,44 @@ Every invitation must have a `tierId` in the database:
 3. Create middleware for `/admin` protection.
 4. Implement shared components with conditional rendering based on `tierId`.
 <!-- END:nextjs-agent-rules -->
+
+## Cursor Cloud specific instructions
+
+### Services overview
+This is a single Next.js 16 app (not a monorepo). The only required services are:
+- **Next.js dev server** (`bun run dev`) — serves all routes, API endpoints, and SSR pages.
+- **PostgreSQL** — the sole data store. Prisma ORM connects via `DATABASE_URL`.
+
+Uploadthing (file uploads) is optional; the app starts and core invitation CRUD works without it.
+
+### Local database setup
+A local PostgreSQL 16 instance is used for development. The database `sentuhundang` is owned by user `sentuhundang` (password: `sentuhundang`).
+
+If the injected `DATABASE_URL` env var points at a remote Neon DB, override it for local dev:
+```
+export DATABASE_URL="postgresql://sentuhundang:sentuhundang@localhost:5432/sentuhundang"
+```
+
+After starting PostgreSQL (`sudo pg_ctlcluster 16 main start`), push the schema and seed:
+```
+DATABASE_URL="..." npx prisma db push
+DATABASE_URL="..." bun prisma/seed.ts
+```
+
+A test admin user exists: **username `admin`**, **password `admin123`**.
+
+### Running the dev server
+Override env vars that point at remote services. Set `DATABASE_URL` to the local PostgreSQL connection string shown above. Set `NEXTAUTH_SECRET` to any random 32+ char string. Set `NEXTAUTH_URL` to the local dev URL (port 3000). Then:
+```
+bun run dev
+```
+
+### Lint / Build / Test
+- **Lint:** `bun run lint` — uses ESLint 9 with `eslint-config-next`. Pre-existing lint issues exist in `components/admin/invitation-form.tsx`.
+- **Build:** `bun run build` (runs `prisma generate && next build`).
+- **No automated test suite** exists yet; testing is manual via the browser.
+
+### Gotchas
+- The `middleware.ts` file convention is deprecated in Next.js 16. The build warns to use `proxy` instead. This is a pre-existing state.
+- Prisma 7 reads `DATABASE_URL` from `prisma.config.ts` (which loads `dotenv`). However, injected Cloud Agent secrets take precedence as actual env vars over `.env` file values. Always pass `DATABASE_URL=...` explicitly on the command line when targeting the local database.
+- The `postinstall` script in `package.json` runs `prisma generate` automatically on `bun install`.
