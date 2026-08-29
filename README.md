@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sentuh Undang
 
-## Getting Started
+A full-stack digital invitation platform designed for configurable invitation tiers, guest personalization, RSVP workflows, QR-based check-in, media features, and administrative management.
 
-First, run the development server:
+The project is built as a real SaaS-style product rather than a static invitation template.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Product capabilities
+
+- Tier-based invitation features and presentation
+- Personalized guest links and invitation content
+- RSVP and digital guest-book workflows
+- Image and media support
+- QR code generation and check-in flows
+- Administrative dashboard with protected routes
+- Authentication with credentials-based access
+- Mobile-first invitation pages
+
+## Tech stack
+
+- **Next.js 16** + React 19 + TypeScript
+- **PostgreSQL** + Prisma 7
+- **NextAuth.js**
+- **UploadThing** for media uploads
+- **Zod** for validation
+- **Framer Motion** for interaction and animation
+- **Tailwind CSS 4**
+- **Bun** for local tooling
+
+## Architecture
+
+```text
+Guests / Admins
+       │
+       ▼
+  Next.js application
+       │
+  ┌────┼─────────────┐
+  │    │             │
+  ▼    ▼             ▼
+Auth  Product      Uploads
+      workflows       │
+  │    │          UploadThing
+  └────┼─────────────┘
+       ▼
+    Prisma
+       │
+       ▼
+  PostgreSQL
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Local development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+bun install
+cp .env.example .env.local
+bun run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The application requires a PostgreSQL connection and authentication configuration. Use local development values and never commit production credentials.
 
-## Learn More
+Useful checks:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+bun run lint
+bun run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project context
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The product is designed around a tiered invitation business model, where invitation capabilities can be enabled according to the selected package while sharing one underlying application and administration system.
