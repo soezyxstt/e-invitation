@@ -30,8 +30,10 @@ Every invitation must have a `tierId` in the database:
 ## 5. Development Rules & Best Practices
 - **Performance:** All images MUST be optimized/compressed. Initial load for invitations must be under 2s on 3G networks.
 - **Database:** Always use Neon Connection Pooling (suffix `-pooler`) for serverless environments.
-- **Security:** - All routes under `/admin/**` must be protected by `middleware.ts`.
+- **Security:**
+  - All routes under `/admin/**` must be protected by the current Next.js route-protection mechanism.
   - Sensitive data (RSVP phone numbers) must not be exposed in public APIs.
+  - Never hard-code real credentials, production connection strings, or secrets in repository files.
 - **Architecture:** Use Route Groups:
   - `(marketing)` for landing pages.
   - `(invitation)` for dynamic routes `/[slug]`.
@@ -42,7 +44,7 @@ Every invitation must have a `tierId` in the database:
 ## 6. Project Setup Instructions
 1. Initialize Prisma with Neon PostgreSQL.
 2. Setup NextAuth with Credentials Provider.
-3. Create middleware for `/admin` protection.
+3. Protect `/admin` routes using the convention supported by the installed Next.js version.
 4. Implement shared components with conditional rendering based on `tierId`.
 <!-- END:nextjs-agent-rules -->
 
@@ -56,33 +58,33 @@ This is a single Next.js 16 app (not a monorepo). The only required services are
 Uploadthing (file uploads) is optional; the app starts and core invitation CRUD works without it.
 
 ### Local database setup
-A local PostgreSQL 16 instance is used for development. The database `sentuhundang` is owned by user `sentuhundang` (password: `sentuhundang`).
+Use a local PostgreSQL 16 database with development-only credentials. Keep the connection string in environment variables rather than repository files.
 
-If the injected `DATABASE_URL` env var points at a remote Neon DB, override it for local dev:
-```
-export DATABASE_URL="postgresql://sentuhundang:sentuhundang@localhost:5432/sentuhundang"
+For example:
+```bash
+export DATABASE_URL="postgresql://<local-user>:<local-password>@localhost:5432/<local-db>"
 ```
 
-After starting PostgreSQL (`sudo pg_ctlcluster 16 main start`), push the schema and seed:
-```
+After starting PostgreSQL, push the schema and seed with the environment variable supplied explicitly:
+```bash
 DATABASE_URL="..." npx prisma db push
 DATABASE_URL="..." bun prisma/seed.ts
 ```
 
-A test admin user exists: **username `admin`**, **password `admin123`**.
+If the seed creates a development admin account, read the current development credentials from the seed implementation or local setup notes. Do not document reusable passwords in committed files.
 
 ### Running the dev server
-Override env vars that point at remote services. Set `DATABASE_URL` to the local PostgreSQL connection string shown above. Set `NEXTAUTH_SECRET` to any random 32+ char string. Set `NEXTAUTH_URL` to the local dev URL (port 3000). Then:
-```
+Override env vars that point at remote services. Set `DATABASE_URL` to the intended local PostgreSQL connection string, set `NEXTAUTH_SECRET` to a local random 32+ character string, and set `NEXTAUTH_URL` to the local development URL. Then:
+```bash
 bun run dev
 ```
 
 ### Lint / Build / Test
-- **Lint:** `bun run lint` — uses ESLint 9 with `eslint-config-next`. Pre-existing lint issues exist in `components/admin/invitation-form.tsx`.
+- **Lint:** `bun run lint` — uses ESLint 9 with `eslint-config-next`.
 - **Build:** `bun run build` (runs `prisma generate && next build`).
-- **No automated test suite** exists yet; testing is manual via the browser.
+- **Testing:** keep project-specific test instructions here as automated coverage is added.
 
 ### Gotchas
-- The `middleware.ts` file convention is deprecated in Next.js 16. The build warns to use `proxy` instead. This is a pre-existing state.
-- Prisma 7 reads `DATABASE_URL` from `prisma.config.ts` (which loads `dotenv`). However, injected Cloud Agent secrets take precedence as actual env vars over `.env` file values. Always pass `DATABASE_URL=...` explicitly on the command line when targeting the local database.
+- Follow the route-protection convention required by the installed Next.js version; do not assume older `middleware.ts` behavior is still current.
+- Prisma 7 reads `DATABASE_URL` from `prisma.config.ts` (which loads `dotenv`). Injected environment variables take precedence over values loaded from files, so pass `DATABASE_URL` explicitly when a task must target a specific local database.
 - The `postinstall` script in `package.json` runs `prisma generate` automatically on `bun install`.
