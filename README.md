@@ -1,30 +1,20 @@
 # Sentuh Undang
 
-A full-stack digital invitation platform designed for configurable invitation tiers, guest personalization, RSVP workflows, QR-based check-in, media features, and administrative management.
+Full-stack digital invitation platform with configurable packages, guest personalization, RSVP, QR check-in, media, and admin tools.
 
-The project is built as a real SaaS-style product rather than a static invitation template.
+## Features
 
-## Product capabilities
-
-- Tier-based invitation features and presentation
-- Personalized guest links and invitation content
-- RSVP and digital guest-book workflows
+- Tier-based invitation features
+- Personalized guest links
+- RSVP and guest-book flows
 - Image and media support
-- QR code generation and check-in flows
-- Administrative dashboard with protected routes
-- Authentication with credentials-based access
+- QR code generation and check-in
+- Protected admin dashboard
 - Mobile-first invitation pages
 
-## Tech stack
+## Stack
 
-- **Next.js 16** + React 19 + TypeScript
-- **PostgreSQL** + Prisma 7
-- **NextAuth.js**
-- **UploadThing** for media uploads
-- **Zod** for validation
-- **Framer Motion** for interaction and animation
-- **Tailwind CSS 4**
-- **Bun** for local tooling
+`Next.js 16` `React 19` `TypeScript` `PostgreSQL` `Prisma` `NextAuth.js` `UploadThing` `Zod` `Framer Motion` `Tailwind CSS 4` `Bun`
 
 ## Architecture
 
@@ -32,23 +22,16 @@ The project is built as a real SaaS-style product rather than a static invitatio
 Guests / Admins
        │
        ▼
-  Next.js application
+  Next.js App
        │
-  ┌────┼─────────────┐
-  │    │             │
-  ▼    ▼             ▼
-Auth  Product      Uploads
-      workflows       │
-  │    │          UploadThing
-  └────┼─────────────┘
-       ▼
-    Prisma
+   Auth + Product + Uploads
        │
-       ▼
-  PostgreSQL
+     Prisma
+       │
+   PostgreSQL
 ```
 
-## Local development
+## Development
 
 ```bash
 bun install
@@ -56,15 +39,11 @@ cp .env.example .env.local
 bun run dev
 ```
 
-The application requires a PostgreSQL connection and authentication configuration. Use local development values and never commit production credentials.
-
-Useful checks:
+Validation:
 
 ```bash
 bun run lint
 bun run build
 ```
 
-## Project context
-
-The product is designed around a tiered invitation business model, where invitation capabilities can be enabled according to the selected package while sharing one underlying application and administration system.
+Use local development credentials and never commit production secrets.
