@@ -7,32 +7,32 @@ import { FadeInSection } from "./FadeInSection";
 
 const faqs = [
   {
-    q: "Bagaimana cara memesan undangan digital di SentuhUndang?",
-    a: "Sangat mudah! Cukup hubungi kami via WhatsApp, pilih paket yang sesuai, kirimkan data pernikahan Anda (nama, tanggal, lokasi, dsb.), dan kami akan membuatkan undangan digital Anda dalam waktu 1–3 hari kerja. Anda juga bisa melakukan revisi hingga puas sebelum disebarkan.",
+    q: "Bagaimana cara memesan?",
+    a: "Pilih paket, lalu hubungi kami melalui WhatsApp. Siapkan nama mempelai, tanggal, lokasi, dan bahan undangan. Konfirmasikan waktu pengerjaan dan kebutuhan revisi saat memesan.",
   },
   {
-    q: "Apakah link undangan bisa disebarkan langsung via WhatsApp?",
-    a: "Tentu! Setiap undangan memiliki link unik yang bisa langsung dibagikan melalui WhatsApp, Instagram, atau platform lainnya. Tamu cukup klik link tersebut untuk membuka undangan — tanpa perlu install aplikasi apapun.",
+    q: "Bagaimana cara membagikan undangan?",
+    a: "Bagikan tautan undangan melalui WhatsApp atau media sosial. Tamu bisa membukanya di browser tanpa memasang aplikasi.",
   },
   {
-    q: "Apa perbedaan antara paket Simpel, Elegan, Istimewa, dan Sultan?",
-    a: "Paket Simpel mencakup informasi dasar pernikahan, RSVP, dan berbagi via WA. Paket Elegan menambahkan galeri foto, musik latar romantis, dan ornamen Batik Garutan. Paket Istimewa melengkapi dengan kisah perjalanan cinta, buku tamu digital, dan halaman khusus MC. Paket Sultan adalah yang paling lengkap: live ucapan selamat dari tamu, QR check-in, video background, dan domain khusus.",
+    q: "Apa perbedaan setiap paket?",
+    a: "Simpel memuat informasi acara dan RSVP. Elegan menambahkan galeri, musik, dan nama tamu. Istimewa dilengkapi cerita pasangan, buku tamu, dan halaman MC. Sultan menambahkan layar ucapan langsung, check-in QR, latar video, dan domain khusus. Lihat rincian fitur di bagian paket.",
   },
   {
-    q: "Bisakah nama tamu ditulis personal di setiap undangan yang dikirim?",
-    a: "Bisa! Mulai dari Paket Elegan ke atas, setiap undangan bisa menampilkan nama tamu secara personal. Misalnya, Bapak Ujang akan melihat \"Kepada Yth. Bapak Ujang\" di halaman depan undangannya — terasa lebih berkesan dan personal.",
+    q: "Bisa mencantumkan nama tamu?",
+    a: "Bisa, mulai dari paket Elegan. Nama tamu tampil di halaman pembuka, misalnya \"Kepada Yth. Bapak Ujang\".",
   },
   {
-    q: "Berapa lama undangan bisa diakses setelah hari pernikahan?",
-    a: "Semua paket sudah termasuk hosting selama 1 tahun penuh tanpa biaya tambahan. Jadi tamu masih bisa membuka undangan untuk mengingat kenangan, melihat foto galeri, atau membaca buku tamu hingga setahun setelah pernikahan.",
+    q: "Berapa lama undangan aktif?",
+    a: "Semua paket mencakup hosting selama satu tahun. Konfirmasikan tanggal mulai masa aktif saat memesan.",
   },
   {
-    q: "Apakah saya bisa memilih musik latar sendiri untuk undangan?",
-    a: "Ya! Di Paket Elegan, Istimewa, dan Sultan, Anda bisa memilih lagu favorit seperti \"Akad\" dari Payung Teduh, \"Nikah\" dari Juicy Luicy, \"Beautiful in White\", atau lagu lain yang Anda suka. Cukup beritahu kami judul lagunya dan kami akan membantu prosesnya.",
+    q: "Bisa memilih musik sendiri?",
+    a: "Musik latar tersedia mulai dari paket Elegan. Sampaikan pilihan musik Anda saat memesan agar kami bisa membantu menyiapkannya.",
   },
 ];
 
-export function FAQ() {
+export function FAQ({ whatsappNumber }: { whatsappNumber: string }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
@@ -45,31 +45,12 @@ export function FAQ() {
       <div className="relative mx-auto max-w-3xl px-6 lg:px-10">
         {/* Section header */}
         <FadeInSection className="mb-14 text-center">
-          <div className="mb-5 inline-flex items-center gap-3">
-            <div className="h-px w-10 bg-muted-gold/50" />
-            <span
-              className="text-xs tracking-[0.35em] uppercase text-muted-gold"
-              style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
-            >
-              Pertanyaan Umum
-            </span>
-            <div className="h-px w-10 bg-muted-gold/50" />
-          </div>
           <h2
             className="font-serif text-4xl leading-tight text-wood-brown sm:text-5xl"
             style={{ fontFamily: "var(--font-serif)" }}
           >
-            Ada yang Ingin
-            <br />
-            <span className="italic text-muted-gold">Ditanyakan?</span>
+            Pertanyaan umum
           </h2>
-          <p
-            className="mt-5 mx-auto max-w-md text-base leading-relaxed text-wood-brown/70"
-            style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
-          >
-            Kumpulan pertanyaan yang sering kami terima. Tidak menemukan jawabannya?
-            Chat langsung via WhatsApp.
-          </p>
         </FadeInSection>
 
         {/* FAQ list */}
@@ -134,16 +115,15 @@ export function FAQ() {
             className="text-sm text-wood-brown/60 mb-4"
             style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
           >
-            Masih ada pertanyaan lain?
+            Perlu bantuan?
           </p>
           <a
-            href="https://wa.me/6281234567890?text=Halo%20SentuhUndang%2C%20saya%20ingin%20bertanya%20tentang%20undangan%20digital."
+            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Halo, saya ingin bertanya tentang undangan digital SentuhUndang.")}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 rounded-full bg-wood-brown px-7 py-3.5 text-sm font-medium text-primary-cream transition-colors hover:bg-wood-brown/90"
             style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
           >
-            <span className="h-2 w-2 animate-pulse rounded-full bg-whatsapp" />
             Tanya via WhatsApp
           </a>
         </FadeInSection>

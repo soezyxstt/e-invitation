@@ -37,9 +37,9 @@ export const metadata: Metadata = {
   ),
   title: {
     default: "Sentuh Undang",
-    template: "%s — Sentuh Undang",
+    template: "%s | Sentuh Undang",
   },
-  description: "Undangan digital pernikahan elegan — Garut",
+  description: "Undangan pernikahan digital dengan sentuhan Sunda dari Garut.",
   openGraph: {
     siteName: "Sentuh Undang",
     locale: "id_ID",

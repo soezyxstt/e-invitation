@@ -74,6 +74,10 @@ body {
   background-color: var(--color-primary-cream);
 }
 
+.marketing-bg section[id] {
+  scroll-margin-top: 5rem;
+}
+
 /* Grain/noise texture overlay for luxury sections */
 .grain-overlay::after {
   content: "";

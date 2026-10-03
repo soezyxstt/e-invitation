@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "SentuhUndang — Undangan Digital Pernikahan Elegan Khas Garut",
+  title: { absolute: "SentuhUndang | Undangan Pernikahan Digital" },
   description:
-    "Platform undangan digital pernikahan premium dengan sentuhan Batik Garutan, Basa Sunda Lemes, dan teknologi modern. Tersedia 4 paket mulai Rp 49.000. Melayani seluruh Kabupaten Garut.",
+    "Undangan pernikahan digital dengan sentuhan Sunda. Pilih desain dan paket sesuai kebutuhan, lalu bagikan kepada tamu.",
   keywords: [
     "undangan digital",
     "undangan pernikahan",
@@ -15,23 +15,23 @@ export const metadata: Metadata = {
     "wedding invitation",
   ],
   openGraph: {
-    title: "SentuhUndang — Undangan Digital Pernikahan Elegan Khas Garut",
+    title: "SentuhUndang | Undangan Pernikahan Digital",
     description:
-      "Undangan digital premium dengan sentuhan Batik Garutan dan Basa Sunda Lemes. 4 paket tersedia mulai Rp 49.000.",
+      "Pilih desain undangan pernikahan dengan sentuhan Sunda dan paket sesuai kebutuhan.",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "SentuhUndang — Platform Undangan Digital Garut",
+        alt: "SentuhUndang, undangan digital dari Garut",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SentuhUndang — Undangan Digital Pernikahan Garut",
+    title: "SentuhUndang | Undangan Pernikahan Digital",
     description:
-      "Platform undangan digital premium dengan sentuhan budaya Sunda dan Batik Garutan.",
+      "Undangan pernikahan digital dengan sentuhan Sunda.",
   },
 };
 

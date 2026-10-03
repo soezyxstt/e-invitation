@@ -17,7 +17,6 @@ import {
   Sun,
   Droplets,
   ChevronDown,
-  Gift,
 } from "lucide-react";
 import { FadeInSection } from "./FadeInSection";
 
@@ -38,7 +37,7 @@ interface PreviewItem {
 // ── Data: 4 items per design template ────────────────────────────────────────
 
 const ITEMS: PreviewItem[] = [
-  // ── Template 1 — Klasik Elegan ─────────────────────────────────────────
+  // ── Template 1 : Klasik Elegan ─────────────────────────────────────────
   {
     slug: "demo-simpel",
     couple: "Asep & Siti",
@@ -71,7 +70,7 @@ const ITEMS: PreviewItem[] = [
     image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=700&q=85&auto=format&fit=crop",
     guestParam: "Bapak+H.+Cecep",
   },
-  // ── Template 2 — Modern Bold ────────────────────────────────────────────
+  // ── Template 2 : Modern Bold ────────────────────────────────────────────
   {
     slug: "demo-simpel-2",
     couple: "Bambang & Wulan",
@@ -104,7 +103,7 @@ const ITEMS: PreviewItem[] = [
     image: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=700&q=85&auto=format&fit=crop",
     guestParam: "YM+Cecep+Hendra",
   },
-  // ── Template 3 — Minimalis Bersih ───────────────────────────────────────
+  // ── Template 3 : Minimalis Bersih ───────────────────────────────────────
   {
     slug: "demo-simpel-3",
     couple: "Yudi & Pipih",
@@ -137,7 +136,7 @@ const ITEMS: PreviewItem[] = [
     image: "https://images.unsplash.com/photo-1478146896981-b80fe463b330?w=700&q=85&auto=format&fit=crop",
     guestParam: "YM+Sofyan+Djalil",
   },
-  // ── Template 4 — Botanica (Green Floral) ────────────────────────────────
+  // ── Template 4 : Botanica (Green Floral) ────────────────────────────────
   {
     slug: "demo-simpel",
     couple: "Bayu & Putri",
@@ -170,7 +169,7 @@ const ITEMS: PreviewItem[] = [
     image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=700&q=85&auto=format&fit=crop",
     guestParam: "H.+Maman+Suparman",
   },
-  // ── Template 5 — Sepia (Warm Vintage) ───────────────────────────────────
+  // ── Template 5 : Sepia (Warm Vintage) ───────────────────────────────────
   {
     slug: "demo-simpel-2",
     couple: "Topan & Dewi",
@@ -203,7 +202,7 @@ const ITEMS: PreviewItem[] = [
     image: "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=700&q=85&auto=format&fit=crop",
     guestParam: "Bp.+H.+Sopyan",
   },
-  // ── Template 6 — Azura (Blue Romantic) ──────────────────────────────────
+  // ── Template 6 : Azura (Blue Romantic) ──────────────────────────────────
   {
     slug: "demo-simpel-3",
     couple: "Aldi & Fitri",
@@ -260,7 +259,7 @@ const DESIGN_CONFIG: Record<
 > = {
   1: {
     label: "Klasik Elegan", sub: "Foto & teks berdampingan",
-    desc: "Tampilan foto dan teks yang seimbang, bersih, dan penuh keanggunan — cocok untuk pasangan yang ingin kesan klasik dan romantis.",
+    desc: "Foto dan teks berdampingan dengan nuansa klasik.",
     icon: AlignCenter,
     cardStyle: "border-muted-gold/30 bg-primary-cream hover:border-wood-brown/45 hover:shadow-xl hover:shadow-wood-brown/15",
     imageStyle: "brightness-90 group-hover:brightness-95",
@@ -268,7 +267,7 @@ const DESIGN_CONFIG: Record<
   },
   2: {
     label: "Modern Bold", sub: "Berani & penuh karakter",
-    desc: "Desain berani dengan foto penuh layar dan nama mempelai yang besar — cocok untuk pasangan yang ingin tampil beda dan berkesan.",
+    desc: "Foto penuh layar dengan nama mempelai yang menonjol.",
     icon: LayoutGrid,
     cardStyle: "border-accent-ember/25 bg-surface-night hover:border-accent-ember/50 hover:shadow-xl hover:shadow-accent-ember/18",
     imageStyle: "brightness-[0.6] group-hover:brightness-70",
@@ -276,7 +275,7 @@ const DESIGN_CONFIG: Record<
   },
   3: {
     label: "Minimalis Bersih", sub: "Sederhana & mewah",
-    desc: "Tampilan simpel namun mewah dengan fokus pada tulisan indah — cocok untuk pasangan yang menyukai kesan bersih dan berkelas.",
+    desc: "Tampilan sederhana yang berfokus pada teks dan ruang kosong.",
     icon: Layers,
     cardStyle: "border-sage-green/28 bg-primary-cream/92 hover:border-sage-green/48 hover:shadow-xl hover:shadow-sage-green/14",
     imageStyle: "brightness-90 group-hover:brightness-95 grayscale-[20%]",
@@ -284,7 +283,7 @@ const DESIGN_CONFIG: Record<
   },
   4: {
     label: "Botanica", sub: "Bunga & taman hijau",
-    desc: "Nuansa taman bunga segar dengan ornamen botanikal hijau sage dan foto mempelai berbingkai mahkota bunga — cantik dan romantis.",
+    desc: "Warna hijau sage dengan ornamen bunga dan daun.",
     icon: Leaf,
     cardStyle: "border-emerald-200/50 bg-[#F7F5F0] hover:border-emerald-400/55 hover:shadow-xl hover:shadow-emerald-400/12",
     imageStyle: "brightness-90 group-hover:brightness-100",
@@ -292,7 +291,7 @@ const DESIGN_CONFIG: Record<
   },
   5: {
     label: "Sepia", sub: "Hangat & klasik vintage",
-    desc: "Palet amber dan perkamen hangat dengan bingkai portrait bergaya vintage — elegan, penuh karakter, cocok untuk pasangan klasik.",
+    desc: "Warna amber dan krem dengan bingkai foto bergaya vintage.",
     icon: Sun,
     cardStyle: "border-amber-300/40 bg-[#F2E9DC] hover:border-amber-500/55 hover:shadow-xl hover:shadow-amber-400/12",
     imageStyle: "brightness-85 sepia-[18%] group-hover:brightness-95",
@@ -300,7 +299,7 @@ const DESIGN_CONFIG: Record<
   },
   6: {
     label: "Azura", sub: "Biru langit & romantis",
-    desc: "Nuansa langit biru lembut dengan ornamen botanikal biru dan efek selimut langit pada foto hero — dreamy dan penuh perasaan.",
+    desc: "Warna biru lembut dengan ornamen botanikal.",
     icon: Droplets,
     cardStyle: "border-sky-200/50 bg-[#F5F8FC] hover:border-sky-400/55 hover:shadow-xl hover:shadow-sky-400/12",
     imageStyle: "brightness-90 group-hover:brightness-100",
@@ -362,13 +361,11 @@ function PreviewCard({ item }: { item: PreviewItem }) {
         {/* ── Couple name overlay ── */}
         {item.templateId === 1 && (
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-5 text-center">
-            <p className="font-sans text-[7px] uppercase tracking-[0.5em] text-primary-cream/60">The Wedding of</p>
             <p className="mt-1 font-serif font-light leading-tight text-primary-cream" style={{ fontSize: "clamp(16px,4.5vw,22px)" }}>{item.couple}</p>
           </div>
         )}
         {item.templateId === 2 && (
           <div className="absolute bottom-0 left-0 px-4 pb-4">
-            <p className="font-mono text-[7px] uppercase tracking-[0.5em] text-accent-ember">The Wedding of</p>
             <p className="font-serif font-extralight leading-[0.88] text-primary-cream" style={{ fontSize: "clamp(24px,7vw,36px)" }}>{item.couple.split(" & ")[0]}</p>
             <div className="flex items-center gap-1.5 pl-0.5">
               <div className="h-px w-4 bg-accent-ember/55" />
@@ -380,7 +377,6 @@ function PreviewCard({ item }: { item: PreviewItem }) {
         )}
         {item.templateId === 3 && (
           <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-deep-charcoal/85 to-transparent px-4 pb-4 pt-10">
-            <p className="font-mono text-[7px] uppercase tracking-[0.5em] text-sage-green">Undangan Pernikahan</p>
             <p className="mt-1 font-serif font-extralight leading-tight text-primary-cream/95" style={{ fontSize: "clamp(17px,4.8vw,24px)" }}>
               {item.couple.split(" & ")[0]}<span className="mx-2 italic text-sage-green">&amp;</span>{item.couple.split(" & ")[1]}
             </p>
@@ -388,7 +384,6 @@ function PreviewCard({ item }: { item: PreviewItem }) {
         )}
         {item.templateId === 4 && (
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-5 text-center">
-            <p className="font-sans text-[7px] uppercase tracking-[0.5em] text-white/65">Undangan</p>
             <p className="mt-1 font-serif font-light leading-tight text-white" style={{ fontSize: "clamp(16px,4.5vw,22px)" }}>
               {item.couple.split(" & ")[0]}
               <span className="mx-1.5 italic text-green-200">&amp;</span>
@@ -398,13 +393,11 @@ function PreviewCard({ item }: { item: PreviewItem }) {
         )}
         {item.templateId === 5 && (
           <div className="absolute inset-x-0 bottom-0 px-5 pb-5">
-            <p className="font-sans text-[7px] uppercase tracking-[0.5em] text-amber-200/80">The Wedding of</p>
             <p className="mt-1 font-serif italic font-light leading-tight text-white" style={{ fontSize: "clamp(16px,4.5vw,22px)" }}>{item.couple}</p>
           </div>
         )}
         {item.templateId === 6 && (
           <div className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-5 text-center">
-            <p className="font-sans text-[7px] uppercase tracking-[0.5em] text-sky-200/80">Undangan Pernikahan</p>
             <p className="mt-1 font-serif font-light leading-tight text-white" style={{ fontSize: "clamp(16px,4.5vw,22px)" }}>{item.couple}</p>
           </div>
         )}
@@ -460,19 +453,10 @@ function PreviewCard({ item }: { item: PreviewItem }) {
 
         {/* CTA */}
         <div className={`mt-3 flex items-center gap-1.5 text-xs font-medium transition-colors duration-200 group-hover:text-muted-gold ${subTextColor}`} style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}>
-          <span>Lihat Preview</span>
+          <span>Lihat undangan</span>
           <span className="h-px w-4 bg-current transition-all duration-300 group-hover:w-6" />
         </div>
 
-        {item.tier === "sultan" && (
-          <p
-            className={`mt-3 flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wide ${subTextColor}`}
-            style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
-          >
-            <Gift size={11} className="shrink-0 opacity-80" aria-hidden />
-            <span>Wedding gift · Rekening dan QRIS (Tier Sultan)</span>
-          </p>
-        )}
       </div>
     </Link>
   );
@@ -517,20 +501,12 @@ export function Portfolio() {
         {/* ── Section header ── */}
         <FadeInSection className="mb-12 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div>
-            <div className="mb-5 flex items-center gap-4">
-              <div className="h-px w-10 bg-muted-gold/50" />
-              <span className="text-xs uppercase tracking-[0.35em] text-muted-gold" style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}>
-                Preview Desain
-              </span>
-            </div>
             <h2 className="font-serif text-4xl text-wood-brown sm:text-5xl" style={{ fontFamily: "var(--font-serif)" }}>
-              6 Pilihan
-              <br />
-              <span className="italic text-muted-gold">Gaya Tampilan</span>
+              Pilihan desain
             </h2>
           </div>
           <p className="max-w-xs text-sm leading-relaxed text-wood-brown/80" style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}>
-            Pilih gaya tampilan yang paling mencerminkan kepribadian Anda dan pasangan. Klik untuk mencoba langsung.
+            Buka contoh undangan untuk melihat tampilan dan fiturnya.
           </p>
         </FadeInSection>
 
@@ -548,7 +524,7 @@ export function Portfolio() {
               }`}
               style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
             >
-              Semua Gaya
+              Semua desain
             </button>
 
             {DESIGN_TABS.filter((d) => d !== "all").map((d) => {
@@ -593,7 +569,7 @@ export function Portfolio() {
               transition={{ duration: 0.25 }}
               className="mb-5 overflow-hidden"
             >
-              <p className="text-xs italic text-wood-brown/72" style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}>
+              <p className="text-sm text-wood-brown/72" style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}>
                 {DESIGN_CONFIG[activeDesign as 1 | 2 | 3 | 4 | 5 | 6]?.desc}
               </p>
             </motion.div>
@@ -665,7 +641,7 @@ export function Portfolio() {
               className="py-20 text-center"
             >
               <p className="text-sm text-wood-brown/50" style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}>
-                Tidak ada preview untuk kombinasi pilihan ini.
+                Belum ada contoh untuk pilihan ini.
               </p>
             </motion.div>
           )}
@@ -679,7 +655,7 @@ export function Portfolio() {
               className="group inline-flex items-center gap-2.5 rounded-full border border-wood-brown/28 bg-white/80 px-8 py-3.5 text-sm font-medium tracking-wide text-wood-brown transition-all duration-300 hover:border-muted-gold hover:bg-primary-cream hover:text-muted-gold"
               style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
             >
-              <span>Tampilkan Lebih Banyak</span>
+              <span>Lihat lebih banyak</span>
               <ChevronDown size={14} className="transition-transform duration-300 group-hover:translate-y-0.5" />
               <span className="text-[10px] text-wood-brown/40">
                 ({Math.min(LOAD_MORE_STEP, filtered.length - visibleCount)} lagi)
@@ -695,7 +671,7 @@ export function Portfolio() {
             className="group inline-flex items-center gap-3 rounded-full border border-wood-brown/25 px-8 py-4 text-sm font-medium tracking-wide text-wood-brown transition-all duration-300 hover:border-muted-gold hover:text-muted-gold"
             style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
           >
-            <span>Mulai Buat Undangan Anda</span>
+            <span>Pilih paket</span>
             <span className="h-px w-5 bg-current transition-all duration-300 group-hover:w-8" />
           </Link>
         </FadeInSection>

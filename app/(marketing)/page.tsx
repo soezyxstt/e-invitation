@@ -12,11 +12,11 @@ export default function LandingPage() {
   return (
     <main className="marketing-bg">
       <Navbar />
-      <Hero />
+      <Hero whatsappNumber={whatsappNumber} />
       <Pricing whatsappNumber={whatsappNumber} />
       <Features />
       <Portfolio />
-      <FAQ />
+      <FAQ whatsappNumber={whatsappNumber} />
       <Footer />
     </main>
   );

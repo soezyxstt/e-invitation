@@ -4,26 +4,24 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Check, Sparkles, Star, Crown, Zap } from "lucide-react";
 import { FadeInSection } from "./FadeInSection";
-import Link from "next/link";
 
 const tiers = [
   {
     id: 1,
     name: "Simpel",
-    subtitle: "Bersih & Cepat",
     price: "149.000",
     originalPrice: "299.000",
     icon: Zap,
     accentClass: "text-wood-brown/80",
     description:
-      "Cocok untuk yang ingin undangan digital rapi, langsung disebar tanpa repot.",
+      "Informasi acara dan konfirmasi kehadiran dalam satu undangan.",
     features: [
       "Informasi pernikahan lengkap",
       "Link undangan personal",
       "Konfirmasi kehadiran (RSVP)",
       "Pilihan teks Basa Sunda",
-      "Nama & gelar keluarga",
-      "Bagikan via WhatsApp & media sosial",
+      "Nama dan gelar keluarga",
+      "Bagikan lewat WhatsApp dan media sosial",
     ],
     cta: "Pilih Simpel",
     highlighted: false,
@@ -31,20 +29,19 @@ const tiers = [
   {
     id: 2,
     name: "Elegan",
-    subtitle: "Cantik & Berkesan",
     price: "199.000",
     originalPrice: "399.000",
     icon: Star,
     accentClass: "text-muted-gold",
     description:
-      "Undangan dengan sentuhan Batik Garutan, galeri foto kenangan, dan musik latar romantis.",
+      "Tambahkan sentuhan batik, foto, musik, dan nama tamu.",
     features: [
       "Semua fitur Simpel",
       "Ornamen Batik Garutan",
-      "Galeri foto kenangan (maks. 10)",
-      "Musik latar (Akad, Beautiful in White, dll.)",
+      "Galeri hingga 10 foto",
+      "Musik latar",
       "Nama tamu personal di undangan",
-      "5 pilihan tampilan estetik",
+      "5 pilihan desain",
     ],
     cta: "Pilih Elegan",
     highlighted: false,
@@ -52,17 +49,16 @@ const tiers = [
   {
     id: 3,
     name: "Istimewa",
-    subtitle: "Lengkap & Elegan",
     price: "275.000",
     originalPrice: "549.000",
     icon: Sparkles,
     accentClass: "text-sage-green",
     description:
-      "Pengalaman undangan yang utuh: kisah perjalanan cinta, buku tamu digital, dan akses khusus untuk MC.",
+      "Ceritakan perjalanan kalian dan kelola acara lewat halaman MC.",
     features: [
       "Semua fitur Elegan",
-      "Kisah Perjalanan Cinta",
-      "Buku Tamu Digital interaktif",
+      "Kisah perjalanan cinta",
+      "Buku tamu digital",
       "Halaman khusus untuk MC",
       "Mode ringan untuk jaringan lambat",
       "Dukungan prioritas via WhatsApp",
@@ -73,18 +69,17 @@ const tiers = [
   {
     id: 4,
     name: "Sultan",
-    subtitle: "Premium & Eksklusif",
     price: "325.000",
     originalPrice: "649.000",
     icon: Crown,
     accentClass: "text-wood-brown",
     description:
-      "Undangan terlengkap: ucapan langsung dari tamu secara real-time, check-in via QR, video sinematik, dan domain khusus.",
+      "Lengkapi acara dengan dinding ucapan, check-in QR, dan domain khusus.",
     features: [
       "Semua fitur Istimewa",
       "Dinding ucapan langsung (Live Wall)",
       "Check-in tamu via QR Code",
-      "Latar video sinematik",
+      "Latar video",
       "Dukungan domain khusus",
       "Laporan kunjungan tamu",
     ],
@@ -118,37 +113,19 @@ export function Pricing({ whatsappNumber }: PricingProps) {
       <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
         {/* Section header */}
         <FadeInSection className="mb-16 text-center">
-          <div className="mb-5 inline-flex items-center gap-3">
-            <div className="h-px w-10 bg-muted-gold/50" />
-            <span
-              className="text-xs tracking-[0.35em] uppercase text-muted-gold"
-              style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
-            >
-              4 Pilihan Paket
-            </span>
-            <div className="h-px w-10 bg-muted-gold/50" />
-          </div>
           <h2
             className="font-serif text-4xl leading-tight text-wood-brown sm:text-5xl"
             style={{ fontFamily: "var(--font-serif)" }}
           >
-            Temukan Paket
-            <br />
-            <span className="italic text-muted-gold">Sesuai Impian</span> Anda
+            Pilih paketmu.
           </h2>
           <p
             className="mt-5 mx-auto max-w-xl text-base leading-relaxed text-wood-brown/80"
             style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
           >
-            Dari yang sederhana hingga serba eksklusif — setiap paket dirancang
-            untuk menghadirkan pengalaman undangan digital terbaik.
+            Empat pilihan dengan fitur yang bisa disesuaikan dengan kebutuhan acara.
           </p>
 
-          {/* Promo banner */}
-          <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-muted-gold/10 border border-muted-gold/30 px-5 py-2">
-            <span className="text-muted-gold text-xs font-semibold tracking-wide uppercase">🎉 Promo Peluncuran</span>
-            <span className="text-wood-brown/70 text-xs" style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}>Hemat 50% untuk semua paket — terbatas!</span>
-          </div>
         </FadeInSection>
 
         {/* Tier cards grid */}
@@ -174,14 +151,6 @@ export function Pricing({ whatsappNumber }: PricingProps) {
                       : "border border-wood-brown/25 bg-white text-wood-brown hover:shadow-xl hover:shadow-wood-brown/10"
                   }`}
                 >
-                  {/* Popular badge */}
-                  {isHighlighted && (
-                    <div className="absolute inset-x-0 -top-3.5 flex justify-center">
-                      <span className="rounded-full bg-muted-gold px-4 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-deep-charcoal">
-                        Paling Populer
-                      </span>
-                    </div>
-                  )}
 
                   {/* Icon + Tier name */}
                   <div className="mb-5 flex items-start justify-between">
@@ -206,14 +175,6 @@ export function Pricing({ whatsappNumber }: PricingProps) {
                       >
                         {tier.name}
                       </h3>
-                      <p
-                        className={`mt-1 text-xs tracking-wider ${
-                          isHighlighted ? "text-muted-gold/80" : "text-wood-brown/75"
-                        }`}
-                        style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
-                      >
-                        {tier.subtitle}
-                      </p>
                     </div>
 
                     {/* Price with strikethrough */}
@@ -301,13 +262,7 @@ export function Pricing({ whatsappNumber }: PricingProps) {
             className="text-sm text-wood-brown/70"
             style={{ fontFamily: "var(--font-sans-inv, var(--font-geist-sans))" }}
           >
-            Semua paket sudah termasuk hosting 1 tahun · Tanpa biaya bulanan ·{" "}
-            <Link
-              href="#"
-              className="text-muted-gold underline underline-offset-2 hover:text-muted-gold/80"
-            >
-              Lihat perbandingan lengkap →
-            </Link>
+            Semua paket termasuk hosting selama 1 tahun, tanpa biaya bulanan.
           </p>
         </FadeInSection>
       </div>
